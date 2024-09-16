@@ -1,19 +1,20 @@
 import './styles.scss';
 import 'bootstrap';
 import * as yup from 'yup';
+
 import createWatchedState from './view';
 
 const state = {
   isFormValid: null,
-  feedbackMessage: '',
   existingFeeds: [],
+  feedbackCode: '',
 };
 
 const form = document.getElementById('rss-form');
 const urlInput = document.getElementById('url-input');
-const feedback = document.getElementById('feedback');
+const feedbackElem = document.getElementById('feedback');
 
-const observedState = createWatchedState(state, { urlInput, feedback });
+const observedState = createWatchedState(state, { urlInput, feedbackElem });
 
 const isUniqueUrl = (urlValue) => !state.existingFeeds.includes(urlValue);
 
@@ -21,8 +22,8 @@ const linkSchema = yup.object({
   url: yup
     .string()
     .required()
-    .url('Ссылка должна быть валидным URL')
-    .test('is-unique', 'RSS уже существует', (value) => isUniqueUrl(value)),
+    .url('INVALID_URL')
+    .test('is-unique', 'DUPLICATE_URL', (value) => isUniqueUrl(value)),
 });
 
 const validateUrl = (urlValue) => {
@@ -32,14 +33,15 @@ const validateUrl = (urlValue) => {
     .validate(data)
     .then(() => {
       observedState.isFormValid = true;
-      observedState.feedbackMessage = 'RSS успешно загружен';
+      observedState.feedbackCode = 'URL_VALID';
+
       state.existingFeeds.push(urlValue);
-      return { valid: true, message: observedState.feedbackMessage };
+      return { valid: true, message: observedState.feedbackCode };
     })
     .catch((err) => {
       observedState.isFormValid = false;
-      observedState.feedbackMessage = err.message;
-      return { valid: false, message: observedState.feedbackMessage };
+      observedState.feedbackCode = err.message;
+      return { valid: false, message: observedState.feedbackCode };
     });
 };
 

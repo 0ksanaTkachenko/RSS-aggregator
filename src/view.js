@@ -1,26 +1,27 @@
 import onChange from 'on-change';
+import translate from './i18n';
 
 const feedbackRender = (state, elements) => {
-  const { urlInput, feedback } = elements;
+  const { urlInput, feedbackElem } = elements;
 
   if (state.isFormValid) {
     urlInput.value = '';
     urlInput.focus();
 
     urlInput.classList.remove('is-invalid');
-    feedback.classList.remove('text-danger');
-    feedback.classList.add('text-success');
+    feedbackElem.classList.remove('text-danger');
+    feedbackElem.classList.add('text-success');
   } else {
-    feedback.classList.remove('text-success');
-    feedback.classList.add('text-danger');
+    feedbackElem.classList.remove('text-success');
+    feedbackElem.classList.add('text-danger');
     urlInput.classList.add('is-invalid');
   }
-  feedback.textContent = state.feedbackMessage;
+  feedbackElem.textContent = translate(`validation.${state.feedbackCode}`);
 };
 
 const createWatchedState = (state, elements) => {
   const watchedState = onChange(state, (path) => {
-    if (path === 'feedbackMessage') {
+    if (path === 'feedbackCode') {
       feedbackRender(state, elements);
     }
   });
