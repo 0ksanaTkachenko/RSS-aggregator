@@ -4,19 +4,34 @@ import createWatchedState from './view';
 import validateUrl from './validate';
 import dataParse from './parser';
 import fetchRssFeed from './fetchRssFeed';
-import displayRssFeed from './displayRssFeed';
+import generateRssFeed from './generateRssFeed';
 
-const state = {
+const formValidState = {
   isFormValid: null,
   existingFeeds: [],
   feedbackCode: '',
 };
 
+const postsState = { feedsData: {} };
+
 const form = document.getElementById('rss-form');
 const urlInput = document.getElementById('url-input');
 const feedbackElem = document.getElementById('feedback');
 
-const observedState = createWatchedState(state, { urlInput, feedbackElem });
+const postsElem = document.getElementById('posts');
+const feedsElem = document.getElementById('feeds');
+
+const formValidObservedState = createWatchedState(formValidState, { urlInput, feedbackElem });
+const postsObservedState = createWatchedState(postsState, { postsElem, feedsElem });
+
+const updateFormValidity = (isValid, message) => {
+  formValidObservedState.isFormValid = isValid;
+  formValidObservedState.feedbackCode = message;
+};
+
+const updatePostsData = (feedsData) => {
+  postsObservedState.feedsData = feedsData;
+};
 
 form.addEventListener('submit', (e) => {
   e.preventDefault();
@@ -24,17 +39,14 @@ form.addEventListener('submit', (e) => {
   validateUrl(urlValue)
     .then((validateResult) => {
       if (!validateResult.valid) {
-        observedState.isFormValid = false;
-        observedState.feedbackCode = validateResult.message;
-        return null;
+        updateFormValidity(false, validateResult.message);
+        return Promise.reject(new Error(validateResult.message));
       }
 
-      observedState.isFormValid = true;
-      observedState.feedbackCode = validateResult.message;
+      updateFormValidity(true, validateResult.message);
       return fetchRssFeed(urlValue);
     })
     .then((data) => dataParse(data))
-    .then((parsedData) => {
-      displayRssFeed(parsedData);
-    });
+    .then((parsedData) => generateRssFeed(parsedData))
+    .then((feedsData) => updatePostsData(feedsData));
 });
