@@ -2,7 +2,9 @@
     "validation": {
       "URL_VALID": "RSS успешно загружен",
       "INVALID_URL": "Ссылка должна быть валидным URL",
-      "DUPLICATE_URL": "RSS уже существует"
+      "DUPLICATE_URL": "RSS уже существует",
+      "NOT_CONTAIN_RSS": "Ресурс не содержит валидный RSS",
+      "UNKNOWN_ERROR": "Что-то пошло не так"
     },
     "titles": {
       "POSTS": "Посты",

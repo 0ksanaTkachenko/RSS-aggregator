@@ -36,17 +36,34 @@ const updatePostsData = (feedsData) => {
 form.addEventListener('submit', (e) => {
   e.preventDefault();
   const urlValue = urlInput.value.trim();
-  validateUrl(urlValue)
+
+  validateUrl(urlValue, formValidState.existingFeeds)
     .then((validateResult) => {
       if (!validateResult.valid) {
-        updateFormValidity(false, validateResult.message);
-        return Promise.reject(new Error(validateResult.message));
+        throw new Error(validateResult.message);
       }
 
-      updateFormValidity(true, validateResult.message);
-      return fetchRssFeed(urlValue);
+      formValidState.existingFeeds.push(urlValue);
+    })
+    .then(() => fetchRssFeed(urlValue))
+    .then((responseData) => {
+      if (!responseData.status.content_type.includes('xml')) {
+        throw new Error('NOT_CONTAIN_RSS');
+      }
+
+      return responseData;
     })
     .then((data) => dataParse(data))
     .then((parsedData) => generateRssFeed(parsedData))
-    .then((feedsData) => updatePostsData(feedsData));
+    .then((feedsData) => updatePostsData(feedsData))
+    .then(() => updateFormValidity(true, 'URL_VALID'))
+    .catch((error) => {
+      let errCode;
+      if (['INVALID_URL', 'NOT_CONTAIN_RSS', 'DUPLICATE_URL'].includes(error.message)) {
+        errCode = error.message;
+      } else {
+        errCode = 'UNKNOWN_ERROR';
+      }
+      updateFormValidity(false, errCode);
+    });
 });
