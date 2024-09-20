@@ -37,6 +37,7 @@ const createTitle = (titleText, parentElement) => {
 };
 
 const createListItem = (postsArr, parentElement) => {
+  console.log(postsArr);
   postsArr.forEach((post) => {
     const liElem = document.createElement('li');
     liElem.classList.add(
@@ -63,7 +64,6 @@ const createListItem = (postsArr, parentElement) => {
 };
 
 const createFeedsListItem = (feed, parentElement) => {
-  console.log(parentElement);
   const liElem = document.createElement('li');
   liElem.classList.add('list-group-item', 'border-0', 'border-end-0');
 
@@ -88,20 +88,24 @@ const createListGroup = (parentElement) => {
   return listGroup;
 };
 
-const displayFeedsAndPosts = (state, { postsElem, feedsElem }) => {
-  let postslistGroup = postsElem.querySelector('.list-group');
+const displayFeeds = (state, feedsElem) => {
   let feedslistGroup = feedsElem.querySelector('.list-group');
 
-  if (!postslistGroup && !feedslistGroup) {
-    createTitle(translate('titles.POSTS'), postsElem);
+  if (!feedslistGroup) {
     createTitle(translate('titles.FEEDS'), feedsElem);
-
-    postslistGroup = createListGroup(postsElem);
     feedslistGroup = createListGroup(feedsElem);
   }
+  createFeedsListItem(state.feeds.newFeed, feedslistGroup);
+};
 
-  createListItem(state.feedsData.posts, postslistGroup);
-  createFeedsListItem(state.feedsData.feed, feedslistGroup);
+const displayPosts = (state, postsElem) => {
+  let postslistGroup = postsElem.querySelector('.list-group');
+
+  if (!postslistGroup) {
+    createTitle(translate('titles.POSTS'), postsElem);
+    postslistGroup = createListGroup(postsElem);
+  }
+  createListItem(state.posts.newPosts, postslistGroup);
 };
 
 const createWatchedState = (state, elements) => {
@@ -109,8 +113,11 @@ const createWatchedState = (state, elements) => {
     if (path === 'feedbackCode') {
       feedbackRender(state, elements);
     }
-    if (path === 'feedsData') {
-      displayFeedsAndPosts(state, elements);
+    if (path === 'feeds.newFeed') {
+      displayFeeds(state, elements.feedsElem);
+    }
+    if (path === 'posts.newPosts') {
+      displayPosts(state, elements.postsElem);
     }
   });
   return watchedState;
