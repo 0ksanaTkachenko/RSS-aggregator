@@ -27,13 +27,14 @@ const app = () => {
             }
           })
           .then(() => fetchRssFeed(urlValue))
-          .then((responseData) => {
-            if (!responseData.status.content_type.includes('xml')) {
+          .then((data) => dataParse(data))
+          .then((data) => {
+            const isRssValid = data.querySelector('rss') || data.querySelector('feed');
+            if (!isRssValid) {
               throw new Error('NOT_CONTAIN_RSS');
             }
-            return responseData;
+            return data;
           })
-          .then((data) => dataParse(data))
           .then((parsedData) => generateRssFeed(parsedData))
           .then((feedsAndPostsData) => {
             addNewFeed(feedsAndPostsData.feed, postsState);
