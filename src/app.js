@@ -47,13 +47,12 @@ const app = () => {
           })
           .catch((error) => {
             let errCode;
-            if (['INVALID_URL', 'NOT_CONTAIN_RSS', 'DUPLICATE_URL'].includes(error.message)) {
+            if (['INVALID_URL', 'NOT_CONTAIN_RSS', 'DUPLICATE_URL', 'EMPTY_URL'].includes(error.message)) {
               errCode = error.message;
             } else {
               errCode = 'UNKNOWN_ERROR';
             }
             updateFormValidity(formValidState, false, errCode);
-            reject(error);
           });
       });
     });
