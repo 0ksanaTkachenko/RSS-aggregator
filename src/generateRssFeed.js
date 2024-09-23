@@ -14,7 +14,7 @@ const generateRssFeed = (parsedData) => {
   items.forEach((item) => {
     const title = item.querySelector('title').textContent;
     const description = item.querySelector('description').textContent;
-    const link = item.querySelector('link').textContent;
+    const link = item.querySelector('link').textContent.trim();
     const postId = uuidv4();
     posts.push({
       title,
