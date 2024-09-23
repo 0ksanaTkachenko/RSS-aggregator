@@ -4,7 +4,8 @@
       "INVALID_URL": "Ссылка должна быть валидным URL",
       "DUPLICATE_URL": "RSS уже существует",
       "NOT_CONTAIN_RSS": "Ресурс не содержит валидный RSS",
-      "UNKNOWN_ERROR": "Что-то пошло не так"
+      "UNKNOWN_ERROR": "Что-то пошло не так",
+      "EMPTY_URL": "Не должно быть пустым"
     },
     "titles": {
       "POSTS": "Посты",
