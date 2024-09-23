@@ -15,7 +15,7 @@ const app = () => {
   const urlInput = document.getElementById('url-input');
 
   const handleFormSubmit = function handleSubmit() {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       form.addEventListener('submit', (e) => {
         e.preventDefault();
         const urlValue = urlInput.value.trim();

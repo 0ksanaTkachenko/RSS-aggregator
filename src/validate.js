@@ -5,7 +5,7 @@ const isUniqueUrl = (existingFeeds, urlValue) => !existingFeeds.includes(urlValu
 const linkSchema = yup.object({
   url: yup
     .string()
-    .required('EMPTY_URL')
+    .min(1, 'EMPTY_URL')
     .url('INVALID_URL')
     .test('is-unique', 'DUPLICATE_URL', function (urlValue) {
       const { existingFeeds } = this.options.context;
