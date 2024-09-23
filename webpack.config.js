@@ -101,7 +101,19 @@ const config = {
       },
       {
         test: /\.scss$/i,
-        use: ['style-loader', 'css-loader', 'sass-loader'],
+        use: [
+          'style-loader',
+          'css-loader',
+          {
+            loader: 'sass-loader',
+            options: {
+              sassOptions: {
+                // Включи это, чтобы игнорировать предупреждения
+                quietDeps: true,
+              },
+            },
+          },
+        ],
       },
     ],
   },
