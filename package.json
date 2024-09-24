@@ -1,10 +1,9 @@
 {
   "name": "@hexlet/code",
   "version": "1.0.0",
-  "description": "[![Actions Status](https://github.com/0ksanaTkachenko/frontend-project-11/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/0ksanaTkachenko/frontend-project-11/actions)",
+  "description": "[\\![Actions Status\\](https://github.com/0ksanaTkachenko/frontend-project-11/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/0ksanaTkachenko/frontend-project-11/actions)",
   "main": "index.js",
   "scripts": {
-    // "lint": "eslint . --ignore-pattern dist/ --ignore-pattern node_modules/",
     "lint": "npx eslint .",
     "start": "npx webpack serve",
     "build": "webpack --mode production",
