@@ -26,12 +26,7 @@ const app = () => {
               throw new Error(validateResult.message);
             }
           })
-          .then(() => {
-            fetchRssFeed(urlValue);
-            // if (!response.ok) {
-            //   throw new Error('Network response was not ok');
-            // }
-          })
+          .then(() => fetchRssFeed(urlValue))
           .then((data) => dataParse(data))
           .then((data) => {
             const isRssValid = data.querySelector('rss') || data.querySelector('feed');
