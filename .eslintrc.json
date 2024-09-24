@@ -12,10 +12,11 @@
   "rules": {
     "import/no-extraneous-dependencies": ["error", { "devDependencies": ["webpack.config.js"] }],
     "max-len": ["error", { "code": 120, "ignoreComments": true }],
-    // "implicit-arrow-linebreak": ["error", "beside"],
     "arrow-body-style": ["error", "as-needed"],
     "implicit-arrow-linebreak": "off"
-  }
+  },
+  "ignorePatterns": ["dist/", "node_modules/"]
 }
+
 
   
