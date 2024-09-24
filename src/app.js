@@ -26,7 +26,12 @@ const app = () => {
               throw new Error(validateResult.message);
             }
           })
-          .then(() => fetchRssFeed(urlValue))
+          .then(() => {
+            fetchRssFeed(urlValue);
+            // if (!response.ok) {
+            //   throw new Error('Network response was not ok');
+            // }
+          })
           .then((data) => dataParse(data))
           .then((data) => {
             const isRssValid = data.querySelector('rss') || data.querySelector('feed');
@@ -75,7 +80,7 @@ const app = () => {
         })
         .catch((error) => {
           let errCode;
-          if (error instanceof TypeError) {
+          if (error instanceof TypeError || error.message.includes('Network Error')) {
             errCode = 'NETWORK_ERROR';
           } else if (['INVALID_URL', 'NOT_CONTAIN_RSS', 'DUPLICATE_URL', 'EMPTY_URL'].includes(error.message)) {
             errCode = error.message;
