@@ -26,10 +26,7 @@ const app = () => {
               throw new Error(validateResult.message);
             }
           })
-          .then(() => {
-            const response = fetchRssFeed(urlValue);
-            return response.data;
-          })
+          .then(() => fetchRssFeed(urlValue))
           .then((data) => dataParse(data))
           .then((data) => {
             const isRssValid = data.querySelector('rss') || data.querySelector('feed');
@@ -51,6 +48,7 @@ const app = () => {
           })
           .catch((error) => {
             let errCode;
+            console.log(error);
             if (error.response) {
               errCode = 'NETWORK_ERROR';
             } else if (['INVALID_URL', 'NOT_CONTAIN_RSS', 'DUPLICATE_URL', 'EMPTY_URL'].includes(error.message)) {
