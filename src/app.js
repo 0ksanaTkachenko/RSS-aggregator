@@ -49,7 +49,7 @@ const app = () => {
           .catch((error) => {
             let errCode;
             console.log(error);
-            if (error.response.status === 404) {
+            if (error.response) {
               errCode = 'NETWORK_ERROR';
             } else if (['INVALID_URL', 'NOT_CONTAIN_RSS', 'DUPLICATE_URL', 'EMPTY_URL'].includes(error.message)) {
               errCode = error.message;
