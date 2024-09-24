@@ -77,7 +77,6 @@ const app = () => {
         })
         .catch((error) => {
           let errCode;
-          console.log(error.message);
           if (
             ['NETWORK_ERROR', 'INVALID_URL', 'NOT_CONTAIN_RSS', 'DUPLICATE_URL', 'EMPTY_URL'].includes(error.message)
           ) {
