@@ -1,7 +1,7 @@
 {
   "name": "@hexlet/code",
   "version": "1.0.0",
-  "description": "[\\![Actions Status\\](https://github.com/0ksanaTkachenko/frontend-project-11/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/0ksanaTkachenko/frontend-project-11/actions)",
+  "description": "Actions Status badge for the project",
   "main": "index.js",
   "scripts": {
     "lint": "npx eslint .",
@@ -46,3 +46,4 @@
     "yup": "^1.4.0"
   }
 }
+
