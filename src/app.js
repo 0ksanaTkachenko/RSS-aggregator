@@ -26,17 +26,12 @@ const app = () => {
               throw new Error(validateResult.message);
             }
           })
-          .then(() => fetchRssFeed(urlValue))
+          .then(() => {
+            const result = fetchRssFeed(urlValue);
+            return result;
+          })
           .then((data) => dataParse(data))
           .then((data) => {
-            console.log(data);
-
-            const isResponseVilid = data.querySelector('parsererror');
-
-            if (isResponseVilid) {
-              throw new Error('NETWORK_ERROR');
-            }
-
             const isRssValid = data.querySelector('rss') || data.querySelector('feed');
             if (!isRssValid) {
               throw new Error('NOT_CONTAIN_RSS');
@@ -56,9 +51,8 @@ const app = () => {
           })
           .catch((error) => {
             let errCode;
-            console.log(error);
             if (
-              ['INVALID_URL', 'NOT_CONTAIN_RSS', 'DUPLICATE_URL', 'EMPTY_URL', 'NETWORK_ERROR'].includes(error.message)
+              ['NETWORK_ERROR', 'INVALID_URL', 'NOT_CONTAIN_RSS', 'DUPLICATE_URL', 'EMPTY_URL'].includes(error.message)
             ) {
               errCode = error.message;
             } else {
@@ -83,9 +77,10 @@ const app = () => {
         })
         .catch((error) => {
           let errCode;
-          if (error instanceof TypeError || error.message.includes('Network Error')) {
-            errCode = 'NETWORK_ERROR';
-          } else if (['INVALID_URL', 'NOT_CONTAIN_RSS', 'DUPLICATE_URL', 'EMPTY_URL'].includes(error.message)) {
+          console.log(error.message);
+          if (
+            ['NETWORK_ERROR', 'INVALID_URL', 'NOT_CONTAIN_RSS', 'DUPLICATE_URL', 'EMPTY_URL'].includes(error.message)
+          ) {
             errCode = error.message;
           } else {
             errCode = 'UNKNOWN_ERROR';
