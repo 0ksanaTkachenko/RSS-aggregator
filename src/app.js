@@ -29,6 +29,14 @@ const app = () => {
           .then(() => fetchRssFeed(urlValue))
           .then((data) => dataParse(data))
           .then((data) => {
+            console.log(data);
+
+            const isResponseVilid = data.querySelector('parsererror');
+
+            if (isResponseVilid) {
+              throw new Error('NETWORK_ERROR');
+            }
+
             const isRssValid = data.querySelector('rss') || data.querySelector('feed');
             if (!isRssValid) {
               throw new Error('NOT_CONTAIN_RSS');
@@ -49,9 +57,9 @@ const app = () => {
           .catch((error) => {
             let errCode;
             console.log(error);
-            if (error.response) {
-              errCode = 'NETWORK_ERROR';
-            } else if (['INVALID_URL', 'NOT_CONTAIN_RSS', 'DUPLICATE_URL', 'EMPTY_URL'].includes(error.message)) {
+            if (
+              ['INVALID_URL', 'NOT_CONTAIN_RSS', 'DUPLICATE_URL', 'EMPTY_URL', 'NETWORK_ERROR'].includes(error.message)
+            ) {
               errCode = error.message;
             } else {
               errCode = 'UNKNOWN_ERROR';
