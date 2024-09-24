@@ -48,7 +48,10 @@ const app = () => {
           })
           .catch((error) => {
             let errCode;
-            if (['INVALID_URL', 'NOT_CONTAIN_RSS', 'DUPLICATE_URL', 'EMPTY_URL'].includes(error.message)) {
+
+            if (error instanceof TypeError) {
+              errCode = 'NETWORK_ERROR';
+            } else if (['INVALID_URL', 'NOT_CONTAIN_RSS', 'DUPLICATE_URL', 'EMPTY_URL'].includes(error.message)) {
               errCode = error.message;
             } else {
               errCode = 'UNKNOWN_ERROR';
@@ -69,6 +72,17 @@ const app = () => {
           addNewPosts(feedsAndPostsData.posts, postsState);
 
           postsState.posts.existingPosts = updatePostState(postsState);
+        })
+        .catch((error) => {
+          let errCode;
+          if (error instanceof TypeError) {
+            errCode = 'NETWORK_ERROR';
+          } else if (['INVALID_URL', 'NOT_CONTAIN_RSS', 'DUPLICATE_URL', 'EMPTY_URL'].includes(error.message)) {
+            errCode = error.message;
+          } else {
+            errCode = 'UNKNOWN_ERROR';
+          }
+          updateFormValidity(formValidState, false, errCode);
         }),
     );
 

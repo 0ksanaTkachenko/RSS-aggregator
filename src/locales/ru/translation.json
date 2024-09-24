@@ -5,7 +5,8 @@
       "DUPLICATE_URL": "RSS уже существует",
       "NOT_CONTAIN_RSS": "Ресурс не содержит валидный RSS",
       "UNKNOWN_ERROR": "Что-то пошло не так",
-      "EMPTY_URL": "Не должно быть пустым"
+      "EMPTY_URL": "Не должно быть пустым",
+      "NETWORK_ERROR": "Ошибка сети"
     },
     "titles": {
       "POSTS": "Посты",
