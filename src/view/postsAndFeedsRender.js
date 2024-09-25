@@ -76,30 +76,7 @@ const createListGroup = (parentElement) => {
   return listGroup;
 };
 
-// const displayFeeds = (state) => {
-//   const feedsElem = document.getElementById('feeds');
-//   let feedslistGroup = feedsElem.querySelector('.list-group');
-
-//   if (!feedslistGroup) {
-//     createTitle(translate('titles.FEEDS'), feedsElem);
-//     feedslistGroup = createListGroup(feedsElem);
-//   }
-//   createFeedsListItem(state.feeds.newFeed, feedslistGroup);
-// };
-
-// const displayPosts = (state) => {
-//   const postsElem = document.getElementById('posts');
-//   let postslistGroup = postsElem.querySelector('.list-group');
-
-//   if (!postslistGroup) {
-//     createTitle(translate('titles.POSTS'), postsElem);
-//     postslistGroup = createListGroup(postsElem);
-//   }
-//   createListItem(state.posts.newPosts, postslistGroup);
-// };
-
 const displayList = (state, type) => {
-  console.log(type);
   const elem = document.getElementById(type);
   let listGroup = elem.querySelector('.list-group');
 
@@ -118,5 +95,4 @@ const displayList = (state, type) => {
   }
 };
 
-// export { displayFeeds, displayPosts };
 export default displayList;

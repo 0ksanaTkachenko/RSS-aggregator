@@ -1,6 +1,5 @@
 import onChange from 'on-change';
 import feedbackRender from './feedbackRender.js';
-// import { displayFeeds, displayPosts } from './postsAndFeedsRender.js';
 import displayList from './postsAndFeedsRender.js';
 import openModalRender from './openModalRender.js';
 import updateVisitedPostsUI from './updateVisitedPostsUI.js';
@@ -11,11 +10,9 @@ const createWatchedState = (state, elements = []) => {
       feedbackRender(state, elements);
     }
     if (path === 'feeds.newFeed') {
-      // displayFeeds(state, elements.feedsElem);
       displayList(state, 'feeds');
     }
     if (path === 'posts.newPosts') {
-      // displayPosts(state, elements.postsElem);
       displayList(state, 'posts');
     }
     if (path === 'posts.uiState.resentVisitedPost') {
