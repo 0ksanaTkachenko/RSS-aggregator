@@ -19,7 +19,9 @@ const validateUrl = (urlValue, existingFeeds) => {
   return linkSchema
     .validate(data, { context: { existingFeeds } })
     .then(() => ({ valid: true, message: 'URL_VALID' }))
-    .catch((err) => ({ valid: false, message: err.message }));
+    .catch((err) => {
+      throw new Error(err.message);
+    });
 };
 
 export default validateUrl;
