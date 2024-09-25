@@ -1,4 +1,4 @@
-import createWatchedState from './view/view';
+import createWatchedState from './view/view.js';
 
 export const addNewFeed = (newFeedsData, postsState) => {
   const postsObservedState = createWatchedState(postsState);
@@ -8,7 +8,8 @@ export const addNewFeed = (newFeedsData, postsState) => {
 export const addNewPosts = (newPostsData, postsState) => {
   const postsObservedState = createWatchedState(postsState);
   const filteredNewPosts = newPostsData.filter(
-    (newPost) => !postsState.posts.existingPosts.some((existingPost) => existingPost.title === newPost.title),
+    (newPost) =>
+      !postsState.posts.existingPosts.some((existingPost) => existingPost.title === newPost.title),
   );
 
   postsObservedState.posts.newPosts = filteredNewPosts;
@@ -21,4 +22,5 @@ export const addNewPosts = (newPostsData, postsState) => {
   });
 };
 
-export const updatePostState = (postsState) => postsState.posts.existingPosts.concat(postsState.posts.newPosts);
+export const updatePostState = (postsState) =>
+  postsState.posts.existingPosts.concat(postsState.posts.newPosts);

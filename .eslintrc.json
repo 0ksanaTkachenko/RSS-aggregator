@@ -13,10 +13,19 @@
     "import/no-extraneous-dependencies": ["error", { "devDependencies": ["webpack.config.js"] }],
     "max-len": ["error", { "code": 120, "ignoreComments": true }],
     "arrow-body-style": ["error", "as-needed"],
-    "implicit-arrow-linebreak": "off"
+    "implicit-arrow-linebreak": "off",
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "js": "always",
+        "jsx": "always"
+      }
+    ]
   },
   "ignorePatterns": ["dist/", "node_modules/"]
 }
+
 
 
   

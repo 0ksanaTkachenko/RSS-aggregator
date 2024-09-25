@@ -1,8 +1,8 @@
 import onChange from 'on-change';
-import feedbackRender from './feedbackRender';
-import { displayFeeds, displayPosts } from './postsAndFeedsRender';
-import openModalRender from './openModalRender';
-import updateVisitedPostsUI from './updateVisitedPostsUI';
+import feedbackRender from './feedbackRender.js';
+import { displayFeeds, displayPosts } from './postsAndFeedsRender.js';
+import openModalRender from './openModalRender.js';
+import updateVisitedPostsUI from './updateVisitedPostsUI.js';
 
 const createWatchedState = (state, elements = []) => {
   const watchedState = onChange(state, (path, value) => {

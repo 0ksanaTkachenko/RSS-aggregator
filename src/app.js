@@ -1,12 +1,12 @@
 /* eslint-disable implicit-arrow-linebreak, function-paren-newline */
 
-import validateUrl from './validate';
-import dataParse from './parser';
-import fetchRssFeed from './fetchRssFeed';
-import generateRssFeed from './generateRssFeed';
-import initializeStates from './initializeStates';
-import updateFormValidity from './updateFormValidity';
-import { addNewFeed, addNewPosts, updatePostState } from './addNewFeedAndPosts';
+import validateUrl from './validate.js';
+import dataParse from './parser.js';
+import fetchRssFeed from './fetchRssFeed.js';
+import generateRssFeed from './generateRssFeed.js';
+import initializeStates from './initializeStates.js';
+import updateFormValidity from './updateFormValidity.js';
+import { addNewFeed, addNewPosts, updatePostState } from './addNewFeedAndPosts.js';
 
 const app = () => {
   const { formValidState, postsState } = initializeStates();

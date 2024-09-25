@@ -7,7 +7,7 @@ const linkSchema = yup.object({
     .string()
     .min(1, 'EMPTY_URL')
     .url('INVALID_URL')
-    .test('is-unique', 'DUPLICATE_URL', function (urlValue) {
+    .test('is-unique', 'DUPLICATE_URL', function isUniqueUrlTest(urlValue) {
       const { existingFeeds } = this.options.context;
       return isUniqueUrl(existingFeeds, urlValue);
     }),

@@ -1,4 +1,4 @@
-import translate from '../i18n';
+import translate from '../i18n.js';
 
 const feedbackRender = (state, elements) => {
   const { urlInput, feedbackElem } = elements;

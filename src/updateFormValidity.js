@@ -1,4 +1,4 @@
-import createWatchedState from './view/view';
+import createWatchedState from './view/view.js';
 
 const feedbackElem = document.getElementById('feedback');
 const urlInput = document.getElementById('url-input');

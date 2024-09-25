@@ -1,4 +1,4 @@
-import translate from '../i18n';
+import translate from '../i18n.js';
 
 const createTitle = (titleText, parentElement) => {
   const cardDiv = document.createElement('div');
