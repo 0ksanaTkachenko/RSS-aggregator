@@ -8,11 +8,6 @@ export const addNewFeed = (newFeedsData, postsState) => {
 export const addNewPosts = (newPostsData, postsState) => {
   const postsObservedState = createWatchedState(postsState);
 
-  // const filteredNewPosts = newPostsData.filter(
-  //   (newPost) =>
-  //     !postsState.posts.existingPosts.some((existingPost) => existingPost.title === newPost.title),
-  // );
-
   const filteredNewPosts = newPostsData.filter((newPost) => {
     const { existingPosts } = postsState.posts;
     const isTitleDuplicate = ({ title }) => title === newPost.title;

@@ -1,5 +1,5 @@
 import i18next from 'i18next';
-import ruTranslation from './locales/ru/translation.json';
+import ruTranslation from './locales/ru/translation.js';
 
 i18next.init({
   resources: {
