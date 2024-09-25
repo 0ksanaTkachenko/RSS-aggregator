@@ -47,7 +47,7 @@ const createListItem = (postsArr, parentElement) => {
 
     liElem.appendChild(aElem);
     liElem.appendChild(button);
-    parentElement.appendChild(liElem);
+    parentElement.insertBefore(liElem, parentElement.firstChild);
   });
 };
 
