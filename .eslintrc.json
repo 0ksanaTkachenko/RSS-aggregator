@@ -19,7 +19,8 @@
       "ignorePackages",
       {
         "js": "always",
-        "jsx": "always"
+        "jsx": "always",
+        "json": "always"
       }
     ]
   },
