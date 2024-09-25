@@ -76,26 +76,47 @@ const createListGroup = (parentElement) => {
   return listGroup;
 };
 
-const displayFeeds = (state) => {
-  const feedsElem = document.getElementById('feeds');
-  let feedslistGroup = feedsElem.querySelector('.list-group');
+// const displayFeeds = (state) => {
+//   const feedsElem = document.getElementById('feeds');
+//   let feedslistGroup = feedsElem.querySelector('.list-group');
 
-  if (!feedslistGroup) {
-    createTitle(translate('titles.FEEDS'), feedsElem);
-    feedslistGroup = createListGroup(feedsElem);
+//   if (!feedslistGroup) {
+//     createTitle(translate('titles.FEEDS'), feedsElem);
+//     feedslistGroup = createListGroup(feedsElem);
+//   }
+//   createFeedsListItem(state.feeds.newFeed, feedslistGroup);
+// };
+
+// const displayPosts = (state) => {
+//   const postsElem = document.getElementById('posts');
+//   let postslistGroup = postsElem.querySelector('.list-group');
+
+//   if (!postslistGroup) {
+//     createTitle(translate('titles.POSTS'), postsElem);
+//     postslistGroup = createListGroup(postsElem);
+//   }
+//   createListItem(state.posts.newPosts, postslistGroup);
+// };
+
+const displayList = (state, type) => {
+  console.log(type);
+  const elem = document.getElementById(type);
+  let listGroup = elem.querySelector('.list-group');
+
+  const titleKey = type === 'feeds' ? 'titles.FEEDS' : 'titles.POSTS';
+  const newItems = type === 'feeds' ? state.feeds.newFeed : state.posts.newPosts;
+
+  if (!listGroup) {
+    createTitle(translate(titleKey), elem);
+    listGroup = createListGroup(elem);
   }
-  createFeedsListItem(state.feeds.newFeed, feedslistGroup);
+
+  if (type === 'feeds') {
+    createFeedsListItem(newItems, listGroup);
+  } else {
+    createListItem(newItems, listGroup);
+  }
 };
 
-const displayPosts = (state) => {
-  const postsElem = document.getElementById('posts');
-  let postslistGroup = postsElem.querySelector('.list-group');
-
-  if (!postslistGroup) {
-    createTitle(translate('titles.POSTS'), postsElem);
-    postslistGroup = createListGroup(postsElem);
-  }
-  createListItem(state.posts.newPosts, postslistGroup);
-};
-
-export { displayFeeds, displayPosts };
+// export { displayFeeds, displayPosts };
+export default displayList;
