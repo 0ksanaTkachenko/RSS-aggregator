@@ -18,9 +18,7 @@ const fetchRssFeed = (urlValue) => {
 
   return axios
     .get(proxyUrl)
-    .then((response) => {
-      return response.data;
-    })
+    .then((response) => response.data)
     .catch((error) => {
       // Проверка на TypeError для обработки сетевой ошибки
       if (error.isAxiosError && !error.response) {
