@@ -3,7 +3,12 @@ const openModalRender = (state, clickedPostId) => {
   const modalBodyElem = document.querySelector('.modal-body');
   const link = document.querySelector('.full-article');
 
-  const foundPost = state.posts.existingPosts.find((post) => post.postId === clickedPostId);
+  let foundPost = null;
+  state.posts.existingPosts.forEach((post) => {
+    if (post.postId === clickedPostId) {
+      foundPost = post;
+    }
+  });
 
   modalTitleElem.textContent = foundPost.title;
   modalBodyElem.textContent = foundPost.description;
