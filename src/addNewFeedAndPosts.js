@@ -18,15 +18,12 @@ export const addNewFeed = (newFeedsData, postsState) => {
 
 export const addNewPosts = (newPostsData, postsState) => {
   const postsObservedState = createWatchedState(postsState);
+  const existingPosts = Array.from(postsState.posts.existingPosts);
 
   const filteredNewPosts = newPostsData.filter((newPost) => {
-    const { existingPosts } = postsState.posts;
-    return !existingPosts.has(newPost.title);
+    const isDuplicate = !existingPosts.some((existingPost) => existingPost.title === newPost.title);
+    return isDuplicate;
   });
-
-  if (filteredNewPosts.length === 0) {
-    return;
-  }
 
   filteredNewPosts.forEach((newPost) => {
     postsObservedState.posts.existingPosts.add(newPost);
