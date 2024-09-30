@@ -19,9 +19,11 @@ const createWatchedState = (state, elements = []) => {
       const newPost = posts[posts.length - 1];
       displayList('posts', newPost);
     }
-    if (path === 'posts.uiState.resentVisitedPost') {
-      updateVisitedPostsUI(value);
-      openModalRender(state, value.postId);
+    if (path === 'posts.uiState.visitedPosts') {
+      const posts = [...value];
+      const visitedPost = posts[posts.length - 1];
+      updateVisitedPostsUI(visitedPost);
+      openModalRender(state, visitedPost.postId);
     }
   });
   return watchedState;

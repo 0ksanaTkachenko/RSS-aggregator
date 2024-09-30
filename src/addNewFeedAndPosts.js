@@ -32,8 +32,7 @@ export const addNewPosts = (newPostsData, postsState) => {
   filteredNewPosts.forEach(({ postId }) => {
     const button = document.querySelector(`button[data-id="${postId}"]`);
     button.addEventListener('click', () => {
-      postsObservedState.posts.uiState.resentVisitedPost = { postId };
-      postsState.posts.uiState.visitedPosts.push({ postId });
+      postsObservedState.posts.uiState.visitedPosts.add({ postId });
     });
   });
 };

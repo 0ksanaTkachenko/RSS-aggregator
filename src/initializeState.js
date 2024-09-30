@@ -11,8 +11,7 @@ const initializeState = () => {
     },
     posts: {
       uiState: {
-        resentVisitedPost: {},
-        visitedPosts: [],
+        visitedPosts: new Set(),
       },
       existingPosts: new Set(),
     },
