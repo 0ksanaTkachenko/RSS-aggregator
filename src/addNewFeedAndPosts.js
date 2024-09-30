@@ -9,12 +9,10 @@ export const addNewFeed = (newFeedsData, postsState) => {
     return;
   }
 
-  const isDuplicate = existingFeedsArr.some(
-    (feed) => feed.feedTitle === newFeedsData.feed.feedTitle,
-  );
+  const isDuplicate = existingFeedsArr.some((feed) => feed.feedTitle === newFeedsData.feedTitle);
 
   if (!isDuplicate) {
-    postsObservedState.feeds.existingFeeds.add(newFeedsData.newFeed);
+    postsObservedState.feeds.existingFeeds.add(newFeedsData);
   }
 };
 
