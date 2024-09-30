@@ -16,39 +16,37 @@ const createTitle = (titleText, parentElement) => {
   parentElement.appendChild(cardDiv);
 };
 
-const createListItem = (postsArr, parentElement) => {
-  postsArr.forEach((post) => {
-    const liElem = document.createElement('li');
-    liElem.classList.add(
-      'list-group-item',
-      'd-flex',
-      'justify-content-between',
-      'align-items-start',
-      'border-0',
-      'border-end-0',
-    );
-    const aElem = document.createElement('a');
+const createListItem = (post, parentElement) => {
+  const liElem = document.createElement('li');
+  liElem.classList.add(
+    'list-group-item',
+    'd-flex',
+    'justify-content-between',
+    'align-items-start',
+    'border-0',
+    'border-end-0',
+  );
+  const aElem = document.createElement('a');
 
-    aElem.href = post.link;
-    aElem.id = post.postId;
-    aElem.textContent = post.title;
+  aElem.href = post.link;
+  aElem.id = post.postId;
+  aElem.textContent = post.title;
 
-    aElem.classList.add('fw-bold');
-    aElem.setAttribute('target', '_blank');
-    aElem.setAttribute('rel', 'noopener noreferrer');
+  aElem.classList.add('fw-bold');
+  aElem.setAttribute('target', '_blank');
+  aElem.setAttribute('rel', 'noopener noreferrer');
 
-    const button = document.createElement('button');
-    button.type = 'button';
-    button.className = 'btn btn-outline-primary btn-sm';
-    button.dataset.id = post.postId;
-    button.dataset.bsToggle = 'modal';
-    button.dataset.bsTarget = '#modal';
-    button.textContent = 'Просмотр';
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = 'btn btn-outline-primary btn-sm';
+  button.dataset.id = post.postId;
+  button.dataset.bsToggle = 'modal';
+  button.dataset.bsTarget = '#modal';
+  button.textContent = 'Просмотр';
 
-    liElem.appendChild(aElem);
-    liElem.appendChild(button);
-    parentElement.insertBefore(liElem, parentElement.firstChild);
-  });
+  liElem.appendChild(aElem);
+  liElem.appendChild(button);
+  parentElement.insertBefore(liElem, parentElement.firstChild);
 };
 
 const createFeedsListItem = (feed, parentElement) => {
@@ -76,12 +74,11 @@ const createListGroup = (parentElement) => {
   return listGroup;
 };
 
-const displayList = (state, type) => {
+const displayList = (type, newItem) => {
   const elem = document.getElementById(type);
   let listGroup = elem.querySelector('.list-group');
 
   const titleKey = type === 'feeds' ? 'titles.FEEDS' : 'titles.POSTS';
-  const newItems = type === 'feeds' ? state.feeds.newFeed : state.posts.newPosts;
 
   if (!listGroup) {
     createTitle(translate(titleKey), elem);
@@ -89,9 +86,9 @@ const displayList = (state, type) => {
   }
 
   if (type === 'feeds') {
-    createFeedsListItem(newItems, listGroup);
+    createFeedsListItem(newItem, listGroup);
   } else {
-    createListItem(newItems, listGroup);
+    createListItem(newItem, listGroup);
   }
 };
 

@@ -1,4 +1,4 @@
-const initializeStates = () => {
+const initializeState = () => {
   const formValidState = {
     isFormValid: null,
     existingFeeds: [],
@@ -7,21 +7,18 @@ const initializeStates = () => {
 
   const postsState = {
     feeds: {
-      existingFeeds: [],
-      newFeed: {},
+      existingFeeds: new Set(),
     },
     posts: {
       uiState: {
         resentVisitedPost: {},
         visitedPosts: [],
       },
-      existingPosts: [],
-      postsToRemove: [],
-      newPosts: [],
+      existingPosts: new Set(),
     },
   };
 
   return { formValidState, postsState };
 };
 
-export default initializeStates;
+export default initializeState;

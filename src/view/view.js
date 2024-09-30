@@ -9,11 +9,15 @@ const createWatchedState = (state, elements = []) => {
     if (path === 'feedbackCode') {
       feedbackRender(state, elements);
     }
-    if (path === 'feeds.newFeed') {
-      displayList(state, 'feeds');
+    if (path === 'feeds.existingFeeds') {
+      const feeds = [...value];
+      const newFeed = feeds[feeds.length - 1];
+      displayList('feeds', newFeed);
     }
-    if (path === 'posts.newPosts') {
-      displayList(state, 'posts');
+    if (path === 'posts.existingPosts') {
+      const posts = [...value];
+      const newPost = posts[posts.length - 1];
+      displayList('posts', newPost);
     }
     if (path === 'posts.uiState.resentVisitedPost') {
       updateVisitedPostsUI(value);

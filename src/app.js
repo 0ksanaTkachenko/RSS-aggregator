@@ -4,13 +4,14 @@ import validateUrl from './validate.js';
 import dataParse from './parser.js';
 import fetchRssFeed from './fetchRssFeed.js';
 import generateRssFeed from './generateRssFeed.js';
-import initializeStates from './initializeStates.js';
+import initializeState from './initializeState.js';
 import updateFormValidity from './updateFormValidity.js';
 import ruTranslation from './locales/ru/translation.js';
-import { addNewFeed, addNewPosts, updatePostState } from './addNewFeedAndPosts.js';
+import { addNewFeed, addNewPosts } from './addNewFeedAndPosts.js';
 
 const app = () => {
-  const { formValidState, postsState } = initializeStates();
+  const { formValidState, postsState } = initializeState();
+  const timeToUpdate = 5000;
 
   const form = document.getElementById('rss-form');
   const urlInput = document.getElementById('url-input');
@@ -34,7 +35,6 @@ const app = () => {
           .then((feedsAndPostsData) => {
             addNewFeed(feedsAndPostsData.feed, postsState);
             addNewPosts(feedsAndPostsData.posts, postsState);
-            postsState.posts.existingPosts = updatePostState(postsState);
           })
           .then(() => {
             updateFormValidity(formValidState, true, 'URL_VALID');
@@ -54,13 +54,12 @@ const app = () => {
         .then(generateRssFeed)
         .then((feedsAndPostsData) => {
           addNewPosts(feedsAndPostsData.posts, postsState);
-          postsState.posts.existingPosts = updatePostState(postsState);
         })
         .catch((error) => handleError(error)),
     );
 
     Promise.all(promises).then(() => {
-      setTimeout(pollRssFeedsForNewPosts, 5000);
+      setTimeout(pollRssFeedsForNewPosts, timeToUpdate);
     });
   };
 

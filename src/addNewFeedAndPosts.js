@@ -2,7 +2,7 @@ import createWatchedState from './view/view.js';
 
 export const addNewFeed = (newFeedsData, postsState) => {
   const postsObservedState = createWatchedState(postsState);
-  postsObservedState.feeds.newFeed = newFeedsData;
+  postsObservedState.feeds.existingFeeds.add(newFeedsData);
 };
 
 export const addNewPosts = (newPostsData, postsState) => {
@@ -10,11 +10,13 @@ export const addNewPosts = (newPostsData, postsState) => {
 
   const filteredNewPosts = newPostsData.filter((newPost) => {
     const { existingPosts } = postsState.posts;
-    const isTitleDuplicate = ({ title }) => title === newPost.title;
-    return !existingPosts.some(isTitleDuplicate);
+    return !existingPosts.has(newPost.title);
   });
 
-  postsObservedState.posts.newPosts = filteredNewPosts;
+  filteredNewPosts.forEach((newPost) => {
+    postsObservedState.posts.existingPosts.add(newPost);
+  });
+
   filteredNewPosts.forEach(({ postId }) => {
     const button = document.querySelector(`button[data-id="${postId}"]`);
     button.addEventListener('click', () => {
@@ -22,9 +24,4 @@ export const addNewPosts = (newPostsData, postsState) => {
       postsState.posts.uiState.visitedPosts.push({ postId });
     });
   });
-};
-
-export const updatePostState = (postsState) => {
-  const updatedPosts = postsState.posts.existingPosts.concat(postsState.posts.newPosts);
-  return updatedPosts;
 };
