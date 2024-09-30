@@ -2,7 +2,20 @@ import createWatchedState from './view/view.js';
 
 export const addNewFeed = (newFeedsData, postsState) => {
   const postsObservedState = createWatchedState(postsState);
-  postsObservedState.feeds.existingFeeds.add(newFeedsData);
+  const existingFeedsArr = Array.from(postsState.feeds.existingFeeds);
+
+  if (existingFeedsArr.length === 0) {
+    postsObservedState.feeds.existingFeeds.add(newFeedsData);
+    return;
+  }
+
+  const isDuplicate = existingFeedsArr.some(
+    (feed) => feed.feedTitle === newFeedsData.feed.feedTitle,
+  );
+
+  if (!isDuplicate) {
+    postsObservedState.feeds.existingFeeds.add(newFeedsData.newFeed);
+  }
 };
 
 export const addNewPosts = (newPostsData, postsState) => {
