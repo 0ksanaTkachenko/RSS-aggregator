@@ -4,7 +4,7 @@
 
 [![Maintainability](https://api.codeclimate.com/v1/badges/19cefcbb93a77c94340e/maintainability)](https://codeclimate.com/github/0ksanaTkachenko/frontend-project-11/maintainability)
 
-![ESLint](https://github.com/0ksanaTkachenko/workflows/ESLint/badge.svg)
+[![ESLint Status](https://github.com/0ksanaTkachenko/frontend-project-11/actions/workflows/ESLint.yml/badge.svg)](https://github.com/0ksanaTkachenko/frontend-project-11/actions)
 
 ## Access the Application
 
