@@ -4,28 +4,35 @@ import displayList from './postsAndFeedsRender.js';
 import openModalRender from './openModalRender.js';
 import updateVisitedPostsUI from './updateVisitedPostsUI.js';
 
+const getLastItem = (array) => array[array.length - 1];
+
 const createWatchedState = (state, elements = []) => {
   const watchedState = onChange(state, (path, value) => {
-    if (path === 'feedbackCode') {
-      feedbackRender(state, elements);
-    }
-    if (path === 'feeds.existingFeeds') {
-      const feeds = [...value];
-      const newFeed = feeds[feeds.length - 1];
-      displayList('feeds', newFeed);
-    }
-    if (path === 'posts.existingPosts') {
-      const posts = [...value];
-      const newPost = posts[posts.length - 1];
-      displayList('posts', newPost);
-    }
-    if (path === 'posts.uiState.visitedPosts') {
-      const posts = [...value];
-      const visitedPost = posts[posts.length - 1];
-      updateVisitedPostsUI(visitedPost);
-      openModalRender(state, visitedPost.postId);
+    switch (path) {
+      case 'feedbackCode':
+        feedbackRender(state, elements);
+        break;
+      case 'feeds.existingFeeds': {
+        const newFeed = getLastItem([...value]);
+        displayList('feeds', newFeed);
+        break;
+      }
+      case 'posts.existingPosts': {
+        const newPost = getLastItem([...value]);
+        displayList('posts', newPost);
+        break;
+      }
+      case 'posts.uiState.visitedPosts': {
+        const visitedPost = getLastItem([...value]);
+        updateVisitedPostsUI(visitedPost);
+        openModalRender(state, visitedPost.postId);
+        break;
+      }
+      default:
+        break;
     }
   });
+
   return watchedState;
 };
 
