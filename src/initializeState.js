@@ -1,11 +1,10 @@
 const initializeState = () => {
-  const formValidState = {
-    isFormValid: null,
-    existingFeeds: [],
-    feedbackCode: '',
-  };
-
-  const postsState = {
+  const state = {
+    form: {
+      isFormValid: null,
+      existingLinks: new Set(),
+      feedbackCode: '',
+    },
     feeds: {
       existingFeeds: new Set(),
     },
@@ -17,7 +16,7 @@ const initializeState = () => {
     },
   };
 
-  return { formValidState, postsState };
+  return state;
 };
 
 export default initializeState;

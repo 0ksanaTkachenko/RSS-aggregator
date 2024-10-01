@@ -10,7 +10,7 @@ import ruTranslation from './locales/ru/translation.js';
 import { addNewFeed, addNewPosts } from './addNewFeedAndPosts.js';
 
 const app = () => {
-  const { formValidState, postsState } = initializeState();
+  const state = initializeState();
   const timeToUpdate = 5000;
 
   const form = document.getElementById('rss-form');
@@ -19,7 +19,7 @@ const app = () => {
   const handleError = (error) => {
     console.log(error);
     const errCode = ruTranslation.validation[error.message] ? error.message : 'UNKNOWN_ERROR';
-    updateFormValidity(formValidState, false, errCode);
+    updateFormValidity(state, false, errCode);
   };
 
   const handleFormSubmit = function handleSubmit() {
@@ -28,17 +28,17 @@ const app = () => {
         e.preventDefault();
         const urlValue = urlInput.value.trim();
 
-        validateUrl(urlValue, formValidState.existingFeeds)
+        validateUrl(urlValue, state)
           .then(() => fetchRssFeed(urlValue))
           .then((data) => dataParse(data))
           .then((parsedData) => generateRssFeed(parsedData))
           .then((feedsAndPostsData) => {
-            addNewFeed(feedsAndPostsData.feed, postsState);
-            addNewPosts(feedsAndPostsData.posts, postsState);
+            addNewFeed(feedsAndPostsData.feed, state);
+            addNewPosts(feedsAndPostsData.posts, state);
           })
           .then(() => {
-            updateFormValidity(formValidState, true, 'URL_VALID');
-            formValidState.existingFeeds.push(urlValue);
+            updateFormValidity(state, true, 'URL_VALID');
+            state.form.existingLinks.add(urlValue);
             resolve();
           })
           .catch((error) => handleError(error));
@@ -47,13 +47,13 @@ const app = () => {
   };
 
   const pollRssFeedsForNewPosts = () => {
-    const feeds = formValidState.existingFeeds;
+    const feeds = Array.from(state.form.existingLinks);
     const promises = feeds.map((link) =>
       fetchRssFeed(link)
         .then(dataParse)
         .then(generateRssFeed)
         .then((feedsAndPostsData) => {
-          addNewPosts(feedsAndPostsData.posts, postsState);
+          addNewPosts(feedsAndPostsData.posts, state);
         })
         .catch((error) => handleError(error)),
     );

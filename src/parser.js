@@ -1,5 +1,6 @@
 const dataParse = (data) => {
   const parser = new DOMParser();
+
   const xmlDoc = parser.parseFromString(data.contents, 'text/xml');
 
   const isRssValid = xmlDoc.querySelector('rss') || xmlDoc.querySelector('feed');

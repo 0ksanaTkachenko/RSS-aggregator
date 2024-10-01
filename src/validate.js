@@ -1,6 +1,6 @@
 import * as yup from 'yup';
 
-const isUniqueUrl = (existingFeeds, urlValue) => !existingFeeds.includes(urlValue);
+const isUniqueUrl = (existingLinks, urlValue) => !existingLinks.has(urlValue);
 
 const linkSchema = yup.object({
   url: yup
@@ -8,16 +8,16 @@ const linkSchema = yup.object({
     .min(1, 'EMPTY_URL')
     .url('INVALID_URL')
     .test('is-unique', 'DUPLICATE_URL', function isUniqueUrlTest(urlValue) {
-      const { existingFeeds } = this.options.context;
-      return isUniqueUrl(existingFeeds, urlValue);
+      const { existingLinks } = this.options.context;
+      return isUniqueUrl(existingLinks, urlValue);
     }),
 });
 
-const validateUrl = (urlValue, existingFeeds) => {
+const validateUrl = (urlValue, state) => {
   const data = { url: urlValue };
-
+  const { existingLinks } = state.form;
   return linkSchema
-    .validate(data, { context: { existingFeeds } })
+    .validate(data, { context: { existingLinks } })
     .then(() => ({ valid: true, message: 'URL_VALID' }))
     .catch((err) => {
       throw new Error(err.message);
