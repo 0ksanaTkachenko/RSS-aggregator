@@ -4,6 +4,8 @@
 
 [![Maintainability](https://api.codeclimate.com/v1/badges/19cefcbb93a77c94340e/maintainability)](https://codeclimate.com/github/0ksanaTkachenko/frontend-project-11/maintainability)
 
+![ESLint](https://github.com/0ksanaTkachenko/workflows/ESLint/badge.svg)
+
 ## Access the Application
 
 - [View the application on Vercel](https://frontend-project-11-jpyk7j0fj-oksanas-projects-1ac36b2b.vercel.app/)
