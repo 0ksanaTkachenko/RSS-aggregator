@@ -17,7 +17,6 @@ const app = () => {
   const urlInput = document.getElementById('url-input');
 
   const handleError = (error) => {
-    console.log(error);
     const errCode = ruTranslation.validation[error.message] ? error.message : 'UNKNOWN_ERROR';
     updateFormValidity(state, false, errCode);
   };
