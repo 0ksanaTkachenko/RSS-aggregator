@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 
 const generateRssFeed = (parsedData) => {
-  const { feedTitle, feedDescription, posts } = parsedData;
+  const { feedUrl, feedTitle, feedDescription, posts } = parsedData;
 
   const structuredPosts = posts.map((post) => ({
     ...post,
@@ -9,7 +9,7 @@ const generateRssFeed = (parsedData) => {
   }));
 
   return {
-    feed: { feedTitle, feedDescription },
+    feed: { feedUrl, feedTitle, feedDescription },
     posts: structuredPosts,
   };
 };

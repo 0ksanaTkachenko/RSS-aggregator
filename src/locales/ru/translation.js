@@ -1,5 +1,6 @@
 const ruTranslation = {
   validation: {
+    PENDING: '',
     URL_VALID: 'RSS успешно загружен',
     INVALID_URL: 'Ссылка должна быть валидным URL',
     DUPLICATE_URL: 'RSS уже существует',

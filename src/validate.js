@@ -1,6 +1,6 @@
 import * as yup from 'yup';
 
-const isUniqueUrl = (existingLinks, urlValue) => !existingLinks.has(urlValue);
+const isUniqueUrl = (existingLinks, urlValue) => !existingLinks.includes(urlValue);
 
 const linkSchema = yup.object({
   url: yup
@@ -15,7 +15,10 @@ const linkSchema = yup.object({
 
 const validateUrl = (urlValue, state) => {
   const data = { url: urlValue };
-  const { existingLinks } = state.form;
+
+  const feedsArr = Array.from(state.feeds);
+  const existingLinks = feedsArr.map((item) => item.feedUrl);
+
   return linkSchema
     .validate(data, { context: { existingLinks } })
     .then(() => ({ valid: true, message: 'URL_VALID' }))

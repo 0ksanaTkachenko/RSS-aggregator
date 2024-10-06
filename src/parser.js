@@ -1,4 +1,4 @@
-const dataParse = (data) => {
+const dataParse = (data, feedUrl) => {
   const parser = new DOMParser();
 
   const xmlDoc = parser.parseFromString(data.contents, 'text/xml');
@@ -19,6 +19,7 @@ const dataParse = (data) => {
   }));
 
   return {
+    feedUrl,
     feedTitle,
     feedDescription,
     posts,

@@ -1,19 +1,12 @@
 const initializeState = () => {
   const state = {
-    form: {
-      isFormValid: null,
-      existingLinks: new Set(),
-      feedbackCode: '',
+    uiState: {
+      visitedPosts: new Set(),
+      formStatus: 'initial',
+      formFeedbackCode: null,
     },
-    feeds: {
-      existingFeeds: new Set(),
-    },
-    posts: {
-      uiState: {
-        visitedPosts: new Set(),
-      },
-      existingPosts: new Set(),
-    },
+    feeds: new Set(),
+    posts: new Set(),
   };
 
   return state;

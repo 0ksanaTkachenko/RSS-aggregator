@@ -1,5 +1,5 @@
-const updateVisitedPostsUI = (value) => {
-  const aElem = document.getElementById(value.postId);
+const updateVisitedPostsUI = (postId) => {
+  const aElem = document.getElementById(postId);
   aElem.classList.add('fw-normal');
   aElem.classList.add('link-secondary');
   aElem.classList.remove('fw-bold');
