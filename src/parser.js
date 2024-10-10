@@ -3,8 +3,10 @@ const dataParse = (data, feedUrl) => {
 
   const xmlDoc = parser.parseFromString(data.contents, 'text/xml');
 
-  const isRssValid =
-    xmlDoc.querySelector('rss') || xmlDoc.querySelector('feed');
+  const rssElement = xmlDoc.querySelector('rss');
+  const feedElement = xmlDoc.querySelector('feed');
+  const isRssValid = rssElement !== null || feedElement !== null;
+
   if (!isRssValid) {
     throw new Error('NOT_CONTAIN_RSS');
   }
