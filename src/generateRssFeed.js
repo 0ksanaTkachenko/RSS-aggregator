@@ -8,12 +8,14 @@ const generateRssFeed = (parsedData) => {
     postId: uuidv4(),
   }));
 
+  const feed = {
+    feedUrl,
+    feedTitle,
+    feedDescription,
+  };
+
   return {
-    feed: {
-      feedUrl,
-      feedTitle,
-      feedDescription,
-    },
+    feed,
     posts: structuredPosts,
   };
 };
