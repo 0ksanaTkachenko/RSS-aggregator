@@ -3,7 +3,7 @@ const initializeState = () => {
     uiState: {
       visitedPosts: new Set(),
       formStatus: 'initial',
-      formFeedbackCode: null,
+      formValidationStatus: 'PENDING',
     },
     feeds: new Set(),
     posts: new Set(),

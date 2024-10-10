@@ -5,9 +5,10 @@ import dataParse from './parser.js';
 import fetchRssFeed from './fetchRssFeed.js';
 import generateRssFeed from './generateRssFeed.js';
 import initializeState from './initializeState.js';
-import ruTranslation from './locales/ru/translation.js';
 import UIrender from './view/view.js';
 import domElements from './domElements.js';
+import ruTranslation from './locales/ru/translation.js';
+import { addNewFeed, addNewPosts } from './feedManager.js';
 
 const app = () => {
   const state = initializeState();
@@ -24,57 +25,22 @@ const app = () => {
   };
 
   const handleError = (error) => {
-    const formValidationStatus = ruTranslation.validation[error.message]
-      ? error.message
-      : 'UNKNOWN_ERROR';
+    let formValidationStatus;
 
-    updateFormStatus('error', formValidationStatus);
-  };
-
-  const addNewFeed = (newFeed, state) => {
-    const feedsArr = Array.from(state.feeds);
-
-    if (feedsArr.length === 0) {
-      observedState.feeds.add(newFeed);
-      return;
+    if (ruTranslation.validation[error.message]) {
+      formValidationStatus = error.message;
+    } else {
+      formValidationStatus = 'UNKNOWN_ERROR';
     }
 
-    const isDuplicate = feedsArr.some((feed) => feed.feedTitle === newFeed.feedTitle);
-
-    if (!isDuplicate) {
-      observedState.feeds.add(newFeed);
-    }
-  };
-
-  const addNewPosts = (newPosts, state) => {
-    const posts = Array.from(state.posts);
-
-    const filteredNewPosts = newPosts.filter((newPost) => {
-      const isDuplicate = !posts.some((post) => post.title === newPost.title);
-      return isDuplicate;
-    });
-
-    filteredNewPosts.forEach((newPost) => {
-      observedState.posts.add(newPost);
-
-      const aElem = document.getElementById(newPost.postId);
-      const button = document.querySelector(`button[data-id="${newPost.postId}"]`);
-
-      aElem.addEventListener('click', () => {
-        observedState.uiState.visitedPosts.add(newPost.postId);
-      });
-
-      button.addEventListener('click', () => {
-        observedState.uiState.visitedPosts.add(newPost.postId);
-      });
-    });
+    updateFormStatus('error', formValidationStatus, observedState);
   };
 
   const handleFormSubmit = function handleSubmit() {
     return new Promise((resolve) => {
       form.addEventListener('submit', (e) => {
         e.preventDefault();
-        updateFormStatus('submitting', 'PENDING');
+        updateFormStatus('submitting', 'PENDING', observedState);
         const urlValue = urlInput.value.trim();
 
         validateUrl(urlValue, state)
@@ -82,16 +48,15 @@ const app = () => {
           .then((data) => dataParse(data, urlValue))
           .then((parsedData) => generateRssFeed(parsedData))
           .then((feedsAndPostsData) => {
-            addNewFeed(feedsAndPostsData.feed, state);
-            addNewPosts(feedsAndPostsData.posts, state);
+            addNewFeed(feedsAndPostsData.feed, state.feeds, observedState);
+            addNewPosts(feedsAndPostsData.posts, state.posts, observedState);
           })
           .then(() => {
-            updateFormStatus('initial', 'URL_VALID');
+            updateFormStatus('initial', 'URL_VALID', observedState);
             resolve();
           })
           .catch((error) => {
-            console.log(error);
-            handleError(error);
+            handleError(error, observedState);
           });
       });
     });
@@ -104,10 +69,10 @@ const app = () => {
         .then(dataParse)
         .then(generateRssFeed)
         .then((feedsAndPostsData) => {
-          addNewPosts(feedsAndPostsData.posts, state);
+          addNewPosts(feedsAndPostsData.posts, state.posts, observedState);
         })
         .catch((error) => {
-          handleError(error);
+          handleError(error, observedState);
         }),
     );
 

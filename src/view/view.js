@@ -25,11 +25,13 @@ const toggleButtonDuringRequest = (formStatus) => {
 
 const UIrender = (path, value, state) => {
   switch (path) {
-    case 'uiState.formStatus':
+    case 'uiState.formStatus': {
       const feedbackCode = state.uiState.formValidationStatus;
+
       toggleButtonDuringRequest(value);
       feedbackRender(value, feedbackCode);
       break;
+    }
     case 'feeds': {
       const newFeed = getLastItem([...value]);
       displayList('feeds', newFeed);

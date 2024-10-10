@@ -5,16 +5,19 @@
   },
   "extends": [
     "airbnb-base",
+    "eslint:recommended",
+    "plugin:prettier/recommended"
   ],
-  "overrides": [],
   "parserOptions": {
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
   "rules": {
+    "quotes": ["error", "single"],
+    "prettier/prettier": ["error", { "singleQuote": true, "printWidth": 120 }],
     "import/no-extraneous-dependencies": ["error", { "devDependencies": ["webpack.config.js"] }],
     "max-len": ["error", { "code": 120, "ignoreComments": true }],
-    "arrow-body-style": ["error", "as-needed"],
+    "arrow-body-style": ["off"],
     "implicit-arrow-linebreak": "off",
     "import/extensions": [
       "error",
@@ -28,6 +31,7 @@
   },
   "ignorePatterns": ["dist/", "node_modules/"]
 }
+
 
 
 
