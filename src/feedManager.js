@@ -6,7 +6,9 @@ const addNewFeed = (newFeed, feeds, observedState) => {
     return;
   }
 
-  const isDuplicate = feedsArr.some((feed) => feed.feedTitle === newFeed.feedTitle);
+  const isDuplicate = feedsArr.some(
+    (feed) => feed.feedTitle === newFeed.feedTitle,
+  );
 
   if (!isDuplicate) {
     observedState.feeds.add(newFeed);
@@ -24,7 +26,9 @@ const addNewPosts = (newPosts, posts, observedState) => {
     observedState.posts.add(newPost);
 
     const aElem = document.getElementById(newPost.postId);
-    const button = document.querySelector(`button[data-id="${newPost.postId}"]`);
+    const button = document.querySelector(
+      `button[data-id="${newPost.postId}"]`,
+    );
 
     aElem.addEventListener('click', () => {
       observedState.uiState.visitedPosts.add(newPost.postId);
