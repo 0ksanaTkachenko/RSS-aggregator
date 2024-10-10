@@ -9,7 +9,11 @@ const generateRssFeed = (parsedData) => {
   }));
 
   return {
-    feed: { feedUrl, feedTitle, feedDescription },
+    feed: {
+      feedUrl,
+      feedTitle,
+      feedDescription,
+    },
     posts: structuredPosts,
   };
 };
