@@ -1,15 +1,23 @@
 import i18next from 'i18next';
 import ruTranslation from './locales/ru/translation.js';
+import app from './app.js';
 
-i18next.init({
-  resources: {
-    ru: { translation: ruTranslation },
-  },
-  lng: 'ru',
-  interpolation: {
-    escapeValue: false,
-  },
-});
+const runApp = () => {
+  const i18nextInstance = i18next.createInstance();
 
-const translate = (key) => i18next.t(key);
-export default translate;
+  return i18nextInstance
+    .init({
+      resources: {
+        ru: { translation: ruTranslation },
+      },
+      lng: 'ru',
+      interpolation: {
+        escapeValue: false,
+      },
+    })
+    .then(() => {
+      app(i18nextInstance);
+    });
+};
+
+export default runApp;

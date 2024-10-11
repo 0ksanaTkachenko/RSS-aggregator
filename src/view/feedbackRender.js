@@ -1,7 +1,6 @@
-import translate from '../i18n.js';
 import domElements from '../domElements.js';
 
-const feedbackRender = (value, feedbackCode) => {
+const feedbackRender = (value, feedbackCode, i18nextInstance) => {
   const { urlInput, feedback } = domElements;
 
   if (value === 'initial') {
@@ -18,7 +17,7 @@ const feedbackRender = (value, feedbackCode) => {
     return;
   }
 
-  feedback.textContent = translate(`validation.${feedbackCode}`);
+  feedback.textContent = i18nextInstance.t(`validation.${feedbackCode}`);
 };
 
 export default feedbackRender;

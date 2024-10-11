@@ -10,13 +10,14 @@ import domElements from './domElements.js';
 import ruTranslation from './locales/ru/translation.js';
 import { addNewFeed, addNewPosts } from './feedManager.js';
 
-const app = () => {
+const app = (i18nextInstance) => {
   const state = initializeState();
+
   const timeToUpdate = 5000;
   const { form, urlInput } = domElements;
 
   const observedState = onChange(state, (path, value) => {
-    UIrender(path, value, state);
+    UIrender(path, value, state, i18nextInstance);
   });
 
   const updateFormStatus = (newstatus, formValidationStatus) => {
@@ -56,6 +57,7 @@ const app = () => {
             resolve();
           })
           .catch((error) => {
+            console.log(error);
             handleError(error, observedState);
           });
       });

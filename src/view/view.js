@@ -23,23 +23,23 @@ const toggleButtonDuringRequest = (formStatus) => {
   }
 };
 
-const UIrender = (path, value, state) => {
+const UIrender = (path, value, state, i18nextInstance) => {
   switch (path) {
     case 'uiState.formStatus': {
       const feedbackCode = state.uiState.formValidationStatus;
 
       toggleButtonDuringRequest(value);
-      feedbackRender(value, feedbackCode);
+      feedbackRender(value, feedbackCode, i18nextInstance);
       break;
     }
     case 'feeds': {
       const newFeed = getLastItem([...value]);
-      displayList('feeds', newFeed);
+      displayList('feeds', newFeed, i18nextInstance);
       break;
     }
     case 'posts': {
       const newPost = getLastItem([...value]);
-      displayList('posts', newPost);
+      displayList('posts', newPost, i18nextInstance);
       break;
     }
     case 'uiState.visitedPosts': {

@@ -1,5 +1,3 @@
-import translate from '../i18n.js';
-
 const createTitle = (titleText, parentElement) => {
   const cardDiv = document.createElement('div');
   const cardBodyDiv = document.createElement('div');
@@ -74,14 +72,14 @@ const createListGroup = (parentElement) => {
   return listGroup;
 };
 
-const displayList = (type, newItem) => {
+const displayList = (type, newItem, i18nextInstance) => {
   const elem = document.getElementById(type);
   let listGroup = elem.querySelector('.list-group');
 
   const titleKey = type === 'feeds' ? 'titles.FEEDS' : 'titles.POSTS';
 
   if (!listGroup) {
-    createTitle(translate(titleKey), elem);
+    createTitle(i18nextInstance.t(titleKey), elem);
     listGroup = createListGroup(elem);
   }
 
