@@ -63,8 +63,8 @@ const app = (i18nextInstance) => {
 
   const pollRssFeedsForNewPosts = () => {
     const feedsArr = Array.from(state.feeds);
-    const promises = feedsArr.map(({ feedUrl }) =>
-      fetchRssFeed(feedUrl)
+    const promises = feedsArr.map(({ feedUrl }) => {
+      return fetchRssFeed(feedUrl)
         .then(dataParse)
         .then(generateRssFeed)
         .then((feedsAndPostsData) => {
@@ -72,8 +72,8 @@ const app = (i18nextInstance) => {
         })
         .catch((error) => {
           handleError(error, observedState);
-        }),
-    );
+        });
+    });
 
     Promise.all(promises).then(() => {
       setTimeout(pollRssFeedsForNewPosts, timeToUpdate);
