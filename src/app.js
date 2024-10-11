@@ -1,4 +1,3 @@
-/* eslint-disable implicit-arrow-linebreak, function-paren-newline */
 import onChange from 'on-change';
 import validateUrl from './validate.js';
 import dataParse from './parser.js';
@@ -12,7 +11,6 @@ import { addNewFeed, addNewPosts } from './feedManager.js';
 
 const app = (i18nextInstance) => {
   const state = initializeState();
-
   const timeToUpdate = 5000;
   const { form, urlInput } = domElements;
 
@@ -57,7 +55,6 @@ const app = (i18nextInstance) => {
             resolve();
           })
           .catch((error) => {
-            console.log(error);
             handleError(error, observedState);
           });
       });

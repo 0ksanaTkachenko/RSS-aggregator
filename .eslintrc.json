@@ -6,7 +6,6 @@
   "extends": [
     "airbnb-base",
     "eslint:recommended"
-    // "plugin:prettier/recommended"
   ],
   "parserOptions": {
     "ecmaVersion": "latest",
@@ -14,16 +13,11 @@
   },
   "rules": {
     "quotes": ["error", "single"],
-    // "prettier/prettier": ["error", { 
-    //   "singleQuote": true,
-    //   "bracketSameLine": true,
-    //   "printWidth": 120,
-    //   "endOfLine": "auto"
-    //   }],
+    "implicit-arrow-linebreak": "off",
+    "function-paren-newline": "off",
     "import/no-extraneous-dependencies": ["error", { "devDependencies": ["webpack.config.js"] }],
     "max-len": ["error", { "code": 120, "ignoreComments": true }],
     "arrow-body-style": ["off"],
-    "implicit-arrow-linebreak": "off",
     "import/extensions": [
       "error",
       "ignorePackages",
