@@ -2,13 +2,12 @@ const dataParse = (data, feedUrl) => {
   const parser = new DOMParser();
 
   const xmlDoc = parser.parseFromString(data.contents, 'text/xml');
+  const errorNode = xmlDoc.querySelector('parsererror');
 
-  const rssElement = xmlDoc.querySelector('rss');
-  const feedElement = xmlDoc.querySelector('feed');
-  const isRssValid = rssElement !== null || feedElement !== null;
-
-  if (!isRssValid) {
-    throw new Error('NOT_CONTAIN_RSS');
+  if (errorNode) {
+    const error = new Error('NOT_CONTAIN_RSS');
+    error.data = data;
+    throw error;
   }
 
   const feedTitle = xmlDoc.querySelector('title').textContent;
