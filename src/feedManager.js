@@ -1,3 +1,46 @@
+import { v4 as uuidv4 } from 'uuid';
+import axios from 'axios';
+
+const fetchRssFeed = (urlValue) => {
+  const proxyUrl = new URL('https://allorigins.hexlet.app/get');
+  proxyUrl.searchParams.set('url', urlValue);
+  proxyUrl.searchParams.set('disableCache', 'true');
+  const finalUrl = proxyUrl.toString();
+
+  return axios
+    .get(finalUrl)
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      if (error.isAxiosError && !error.response) {
+        throw new Error('NETWORK_ERROR');
+      }
+      throw error;
+    });
+};
+
+const generateRssFeed = (parsedData) => {
+  const { feedUrl } = parsedData;
+  const { feedTitle } = parsedData;
+  const { feedDescription } = parsedData;
+  const { posts } = parsedData;
+
+  const structuredPosts = posts.map((post) => ({
+    ...post,
+    postId: uuidv4(),
+  }));
+
+  return {
+    feed: {
+      feedUrl,
+      feedTitle,
+      feedDescription,
+    },
+    posts: structuredPosts,
+  };
+};
+
 const addNewFeed = (newFeed, feeds, observedState) => {
   const feedsArr = Array.from(feeds);
 
@@ -40,4 +83,4 @@ const addNewPosts = (newPosts, posts, observedState) => {
   });
 };
 
-export { addNewFeed, addNewPosts };
+export { fetchRssFeed, addNewFeed, addNewPosts, generateRssFeed };

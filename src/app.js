@@ -1,13 +1,38 @@
 import onChange from 'on-change';
 import validateUrl from './validate.js';
 import dataParse from './parser.js';
-import fetchRssFeed from './fetchRssFeed.js';
-import generateRssFeed from './generateRssFeed.js';
-import initializeState from './initializeState.js';
 import uIrender from './view/view.js';
-import domElements from './domElements.js';
 import ruTranslation from './locales/ru/translation.js';
-import { addNewFeed, addNewPosts } from './feedManager.js';
+import {
+  fetchRssFeed,
+  addNewFeed,
+  addNewPosts,
+  generateRssFeed,
+} from './feedManager.js';
+
+const initializeState = () => {
+  const state = {
+    uiState: {
+      visitedPosts: new Set(),
+      formStatus: 'initial',
+      formValidationStatus: 'PENDING',
+    },
+    feeds: new Set(),
+    posts: new Set(),
+  };
+
+  return state;
+};
+
+const domElements = {
+  form: document.getElementById('rss-form'),
+  urlInput: document.getElementById('url-input'),
+  feedback: document.getElementById('feedback'),
+  submitBtn: document.getElementById('submit-btn'),
+  modalTitle: document.querySelector('.modal-title'),
+  modalBody: document.querySelector('.modal-body'),
+  modalLink: document.querySelector('.full-article'),
+};
 
 const app = (i18nextInstance) => {
   const state = initializeState();
@@ -15,7 +40,7 @@ const app = (i18nextInstance) => {
   const { form, urlInput } = domElements;
 
   const observedState = onChange(state, (path, value) => {
-    uIrender(path, value, state, i18nextInstance);
+    uIrender(path, value, state, i18nextInstance, domElements);
   });
 
   const updateFormStatus = (newstatus, formValidationStatus) => {
@@ -45,7 +70,6 @@ const app = (i18nextInstance) => {
         validateUrl(urlValue, state)
           .then(() => fetchRssFeed(urlValue))
           .then((data) => {
-            console.log(data);
             const parsedData = dataParse(data, urlValue);
             const feedsAndPostsData = generateRssFeed(parsedData);
             addNewFeed(feedsAndPostsData.feed, state.feeds, observedState);
