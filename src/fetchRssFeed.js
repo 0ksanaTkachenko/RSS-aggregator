@@ -1,12 +1,16 @@
 import axios from 'axios';
 
 const fetchRssFeed = (urlValue) => {
-  const encodedUrl = encodeURIComponent(urlValue);
-  const proxyUrl = `https://allorigins.hexlet.app/get?url=${encodedUrl}&disableCache=true`;
+  const proxyUrl = new URL('https://allorigins.hexlet.app/get');
+  proxyUrl.searchParams.set('url', urlValue);
+  proxyUrl.searchParams.set('disableCache', 'true');
+  const finalUrl = proxyUrl.toString();
 
   return axios
-    .get(proxyUrl)
-    .then((response) => response.data)
+    .get(finalUrl)
+    .then((response) => {
+      return response.data;
+    })
     .catch((error) => {
       if (error.isAxiosError && !error.response) {
         throw new Error('NETWORK_ERROR');

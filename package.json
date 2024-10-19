@@ -1,7 +1,7 @@
 {
   "name": "@hexlet/code",
   "version": "1.0.0",
-  "description": "Actions Status badge for the project",
+  "description": "RSS Aggregator is an application that allows users to add and track RSS feeds. It validates input data and updates the list of posts every 5 seconds to display new entries from added RSS feeds.",
   "main": "index.js",
   "scripts": {
     "lint": "npx eslint . --ignore-path .eslintignore",

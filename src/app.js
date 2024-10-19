@@ -4,7 +4,7 @@ import dataParse from './parser.js';
 import fetchRssFeed from './fetchRssFeed.js';
 import generateRssFeed from './generateRssFeed.js';
 import initializeState from './initializeState.js';
-import UIrender from './view/view.js';
+import uIrender from './view/view.js';
 import domElements from './domElements.js';
 import ruTranslation from './locales/ru/translation.js';
 import { addNewFeed, addNewPosts } from './feedManager.js';
@@ -15,7 +15,7 @@ const app = (i18nextInstance) => {
   const { form, urlInput } = domElements;
 
   const observedState = onChange(state, (path, value) => {
-    UIrender(path, value, state, i18nextInstance);
+    uIrender(path, value, state, i18nextInstance);
   });
 
   const updateFormStatus = (newstatus, formValidationStatus) => {
@@ -35,7 +35,7 @@ const app = (i18nextInstance) => {
     updateFormStatus('error', formValidationStatus, observedState);
   };
 
-  const handleFormSubmit = function handleSubmit() {
+  const handleFormSubmit = () => {
     return new Promise((resolve) => {
       form.addEventListener('submit', (e) => {
         e.preventDefault();
@@ -44,17 +44,17 @@ const app = (i18nextInstance) => {
 
         validateUrl(urlValue, state)
           .then(() => fetchRssFeed(urlValue))
-          .then((data) => dataParse(data, urlValue))
-          .then((parsedData) => generateRssFeed(parsedData))
-          .then((feedsAndPostsData) => {
+          .then((data) => {
+            console.log(data);
+            const parsedData = dataParse(data, urlValue);
+            const feedsAndPostsData = generateRssFeed(parsedData);
             addNewFeed(feedsAndPostsData.feed, state.feeds, observedState);
             addNewPosts(feedsAndPostsData.posts, state.posts, observedState);
-          })
-          .then(() => {
             updateFormStatus('initial', 'URL_VALID', observedState);
             resolve();
           })
           .catch((error) => {
+            console.log(error);
             handleError(error, observedState);
           });
       });
@@ -65,9 +65,9 @@ const app = (i18nextInstance) => {
     const feedsArr = Array.from(state.feeds);
     const promises = feedsArr.map(({ feedUrl }) => {
       const fetchFeed = fetchRssFeed(feedUrl)
-        .then(dataParse)
-        .then(generateRssFeed)
-        .then((feedsAndPostsData) => {
+        .then((data) => {
+          const parsedData = dataParse(data, feedUrl);
+          const feedsAndPostsData = generateRssFeed(parsedData);
           addNewPosts(feedsAndPostsData.posts, state.posts, observedState);
         })
         .catch((error) => {

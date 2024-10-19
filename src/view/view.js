@@ -23,7 +23,7 @@ const toggleButtonDuringRequest = (formStatus) => {
   }
 };
 
-const UIrender = (path, value, state, i18nextInstance) => {
+const uIrender = (path, value, state, i18nextInstance) => {
   switch (path) {
     case 'uiState.formStatus': {
       const feedbackCode = state.uiState.formValidationStatus;
@@ -53,4 +53,4 @@ const UIrender = (path, value, state, i18nextInstance) => {
   }
 };
 
-export default UIrender;
+export default uIrender;
