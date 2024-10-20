@@ -1,10 +1,5 @@
 import displayList from './postsAndFeedsRender.js';
-import {
-  feedbackRender,
-  openModalRender,
-  updateVisitedPostsUI,
-  toggleButtonDuringRequest,
-} from './uiHelpers.js';
+import { feedbackRender, openModalRender, updateVisitedPostsUI, toggleButtonDuringRequest } from './uiHelpers.js';
 
 const getLastItem = (array) => array[array.length - 1];
 

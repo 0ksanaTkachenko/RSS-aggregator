@@ -3,12 +3,7 @@ import validateUrl from './validate.js';
 import dataParse from './parser.js';
 import uIrender from './view/view.js';
 import ruTranslation from './locales/ru/translation.js';
-import {
-  fetchRssFeed,
-  addNewFeed,
-  addNewPosts,
-  generateRssFeed,
-} from './feedManager.js';
+import { fetchRssFeed, addNewFeed, addNewPosts, generateRssFeed } from './feedManager.js';
 
 const initializeState = () => {
   const state = {
@@ -73,12 +68,7 @@ const app = (i18nextInstance) => {
             const parsedData = dataParse(data, urlValue);
             const feedsAndPostsData = generateRssFeed(parsedData);
             addNewFeed(feedsAndPostsData.feed, state.feeds, observedState);
-            addNewPosts(
-              feedsAndPostsData.posts,
-              feedsAndPostsData.feed,
-              state.posts,
-              observedState,
-            );
+            addNewPosts(feedsAndPostsData.posts, feedsAndPostsData.feed, state.posts, observedState);
             updateFormStatus('initial', 'URL_VALID', observedState);
             resolve();
           })
@@ -97,12 +87,7 @@ const app = (i18nextInstance) => {
         .then((data) => {
           const parsedData = dataParse(data, feedUrl);
           const feedsAndPostsData = generateRssFeed(parsedData);
-          addNewPosts(
-            feedsAndPostsData.posts,
-            feedsAndPostsData.feed,
-            state.posts,
-            observedState,
-          );
+          addNewPosts(feedsAndPostsData.posts, feedsAndPostsData.feed, state.posts, observedState);
         })
         .catch((error) => {
           handleError(error, observedState);

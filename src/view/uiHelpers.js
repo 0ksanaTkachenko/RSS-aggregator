@@ -57,9 +57,4 @@ const toggleButtonDuringRequest = (formStatus, domElements) => {
   }
 };
 
-export {
-  feedbackRender,
-  openModalRender,
-  updateVisitedPostsUI,
-  toggleButtonDuringRequest,
-};
+export { feedbackRender, openModalRender, updateVisitedPostsUI, toggleButtonDuringRequest };

@@ -24,7 +24,7 @@ const generateRssFeed = (parsedData) => {
     feedUrl,
     feedTitle,
     feedDescription,
-    posts
+    posts,
   } = parsedData;
 
   const structuredPosts = posts.map((post) => ({
@@ -60,13 +60,13 @@ const addNewFeed = (newFeed, feeds, observedState) => {
 const addNewPosts = (newPosts, newFeed, posts, observedState) => {
   const postsArr = Array.from(posts);
 
-  const existingPostsInFeed = postsArr.filter((existingPost) => {
+  const existingPosts = postsArr.filter((existingPost) => {
     const PostsInFeed = existingPost.feed === newFeed.feedUrl;
     return PostsInFeed;
   });
 
   const filteredNewPosts = newPosts.filter((newPost) => {
-    const isDuplicate = !existingPostsInFeed.some((existingPost) => existingPost.link === newPost.link);
+    const isDuplicate = !existingPosts.some((post) => post.link === newPost.link);
     return isDuplicate;
   });
 
@@ -91,5 +91,5 @@ export {
   fetchRssFeed,
   addNewFeed,
   addNewPosts,
-  generateRssFeed
+  generateRssFeed,
 };

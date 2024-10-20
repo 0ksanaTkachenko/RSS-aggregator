@@ -1,7 +1,7 @@
 {
     "singleQuote": true,
-    "bracketSameLine": false,
     "printWidth": 120,
-    "trailingComma": "es5",
+    "bracketSameLine": false,
+    "trailingComma": "all",
     "proseWrap": "never"
-}
+  }
