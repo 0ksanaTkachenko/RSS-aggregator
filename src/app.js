@@ -3,7 +3,13 @@ import validateUrl from './validate.js';
 import dataParse from './parser.js';
 import uIrender from './view/view.js';
 import ruTranslation from './locales/ru/translation.js';
-import { fetchRssFeed, addNewFeed, addNewPosts, generateRssFeed } from './feedManager.js';
+// prettier-ignore
+import {
+  fetchRssFeed,
+  addNewFeed,
+  addNewPosts,
+  generateRssFeed
+} from './feedManager.js';
 
 const initializeState = () => {
   const state = {
