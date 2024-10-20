@@ -53,12 +53,16 @@ const addNewFeed = (newFeed, feeds, observedState) => {
   }
 };
 
-const addNewPosts = (newPosts, posts, observedState) => {
+const addNewPosts = (newPosts, newFeed, posts, observedState) => {
   const postsArr = Array.from(posts);
 
+  const existingPostsInFeed = postsArr.filter((existingPost) => {
+    return existingPost.feed === newFeed.feedUrl;
+  });
+
   const filteredNewPosts = newPosts.filter((newPost) => {
-    const isDuplicate = !postsArr.some(
-      (post) => post.postId === newPost.postId,
+    const isDuplicate = !existingPostsInFeed.some(
+      (existingPost) => existingPost.link === newPost.link,
     );
     return isDuplicate;
   });

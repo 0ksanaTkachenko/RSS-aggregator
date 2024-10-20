@@ -18,6 +18,7 @@ const dataParse = (data, feedUrl) => {
     title: item.querySelector('title').textContent,
     description: item.querySelector('description').textContent,
     link: item.querySelector('link').textContent.trim(),
+    feed: feedUrl,
   }));
 
   return {

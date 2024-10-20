@@ -73,7 +73,12 @@ const app = (i18nextInstance) => {
             const parsedData = dataParse(data, urlValue);
             const feedsAndPostsData = generateRssFeed(parsedData);
             addNewFeed(feedsAndPostsData.feed, state.feeds, observedState);
-            addNewPosts(feedsAndPostsData.posts, state.posts, observedState);
+            addNewPosts(
+              feedsAndPostsData.posts,
+              feedsAndPostsData.feed,
+              state.posts,
+              observedState,
+            );
             updateFormStatus('initial', 'URL_VALID', observedState);
             resolve();
           })
@@ -91,7 +96,12 @@ const app = (i18nextInstance) => {
         .then((data) => {
           const parsedData = dataParse(data, feedUrl);
           const feedsAndPostsData = generateRssFeed(parsedData);
-          addNewPosts(feedsAndPostsData.posts, state.posts, observedState);
+          addNewPosts(
+            feedsAndPostsData.posts,
+            feedsAndPostsData.feed,
+            state.posts,
+            observedState,
+          );
         })
         .catch((error) => {
           handleError(error, observedState);
