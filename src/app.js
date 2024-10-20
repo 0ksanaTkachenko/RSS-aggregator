@@ -78,7 +78,6 @@ const app = (i18nextInstance) => {
             resolve();
           })
           .catch((error) => {
-            console.log(error);
             handleError(error, observedState);
           });
       });
