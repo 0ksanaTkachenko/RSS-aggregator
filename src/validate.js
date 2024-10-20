@@ -1,7 +1,8 @@
 import * as yup from 'yup';
 
 const isUniqueUrl = (existingLinks, urlValue) => {
-  return !existingLinks.includes(urlValue);
+  const isUnique = !existingLinks.includes(urlValue);
+  return isUnique;
 };
 
 const linkSchema = yup.object({

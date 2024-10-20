@@ -61,7 +61,7 @@ const app = (i18nextInstance) => {
   };
 
   const handleFormSubmit = () => {
-    return new Promise((resolve) => {
+    const formAddEventListenerPromise = new Promise((resolve) => {
       form.addEventListener('submit', (e) => {
         e.preventDefault();
         updateFormStatus('submitting', 'PENDING', observedState);
@@ -87,6 +87,7 @@ const app = (i18nextInstance) => {
           });
       });
     });
+    return formAddEventListenerPromise;
   };
 
   const pollRssFeedsForNewPosts = () => {

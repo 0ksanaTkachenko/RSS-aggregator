@@ -9,9 +9,7 @@ const fetchRssFeed = (urlValue) => {
 
   return axios
     .get(finalUrl)
-    .then((response) => {
-      return response.data;
-    })
+    .then((response) => response.data)
     .catch((error) => {
       if (error.isAxiosError && !error.response) {
         throw new Error('NETWORK_ERROR');
