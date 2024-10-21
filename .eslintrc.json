@@ -32,10 +32,10 @@
       {
         "ObjectExpression": { "multiline": true, "consistent": true },
         "ObjectPattern": { "multiline": true, "consistent": true },
-        "ImportDeclaration": { "multiline": true, "minProperties": 3 }, // Теперь перенос только при 3 и более
+        "ImportDeclaration": { "multiline": true, "minProperties": 3 },
         "ExportDeclaration": { "multiline": true, "consistent": true }
       }
-    ],
+    ]
   },
   "ignorePatterns": ["dist/", "node_modules/"]
 }
