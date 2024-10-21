@@ -8,7 +8,7 @@
 
 ## Access the Application
 
-- [View the application on Vercel](https://frontend-project-11-jpyk7j0fj-oksanas-projects-1ac36b2b.vercel.app/)
+- [View the application on Vercel](https://frontend-project-11-eight-brown.vercel.app/)
 
 # RSS Aggregator
 
