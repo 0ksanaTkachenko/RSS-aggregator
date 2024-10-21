@@ -66,7 +66,9 @@ const addNewPosts = (newPosts, newFeed, posts, observedState) => {
   });
 
   const filteredNewPosts = newPosts.filter((newPost) => {
-    const isDuplicate = !existingPosts.some((post) => post.link === newPost.link);
+    const isDuplicate = !existingPosts.some(
+      (post) => post.link === newPost.link,
+    );
     return isDuplicate;
   });
 
@@ -74,7 +76,9 @@ const addNewPosts = (newPosts, newFeed, posts, observedState) => {
     observedState.posts.add(newPost);
 
     const aElem = document.getElementById(newPost.postId);
-    const button = document.querySelector(`button[data-id="${newPost.postId}"]`);
+    const button = document.querySelector(
+      `button[data-id="${newPost.postId}"]`,
+    );
 
     aElem.addEventListener('click', () => {
       observedState.uiState.visitedPosts.add(newPost.postId);
