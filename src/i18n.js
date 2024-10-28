@@ -1,8 +1,7 @@
 import i18next from 'i18next';
 import ruTranslation from './locales/ru/translation.js';
-import app from './app.js';
 
-const runApp = () => {
+const i18nInit = () => {
   const i18nextInstance = i18next.createInstance();
 
   return i18nextInstance
@@ -15,9 +14,7 @@ const runApp = () => {
         escapeValue: false,
       },
     })
-    .then(() => {
-      app(i18nextInstance);
-    });
+    .then(() => i18nextInstance);
 };
 
-export default runApp;
+export default i18nInit;

@@ -1,5 +1,5 @@
 import 'bootstrap';
-import runApp from './i18n.js';
+import app from './app.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-runApp();
+app();
