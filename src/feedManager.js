@@ -1,11 +1,15 @@
 import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
 
-const fetchRssFeed = (urlValue) => {
+const createProxyUrl = (urlValue) => {
   const proxyUrl = new URL('https://allorigins.hexlet.app/get');
   proxyUrl.searchParams.set('url', urlValue);
   proxyUrl.searchParams.set('disableCache', 'true');
-  const finalUrl = proxyUrl.toString();
+  return proxyUrl.toString();
+};
+
+const fetchRssFeed = (urlValue) => {
+  const finalUrl = createProxyUrl(urlValue);
 
   return axios
     .get(finalUrl)
