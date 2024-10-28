@@ -6,7 +6,7 @@ const dataParse = (data, feedUrl) => {
 
   if (errorNode) {
     const error = new Error('NOT_CONTAIN_RSS');
-    error.data = data;
+    error.data = errorNode.textContent;
     throw error;
   }
 
