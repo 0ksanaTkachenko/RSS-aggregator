@@ -96,5 +96,5 @@ export {
   addNewFeed,
   addNewPosts,
   generateRssFeed,
-  handlePostInteraction
+  handlePostInteraction,
 };

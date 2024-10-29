@@ -1,13 +1,14 @@
 import * as yup from 'yup';
 
 const createLinkSchema = (existingLinks) => {
-  return yup.object({
+  const yupObj = yup.object({
     url: yup
       .string()
       .min(1, 'EMPTY_URL')
       .url('INVALID_URL')
       .notOneOf(existingLinks, 'DUPLICATE_URL'),
   });
+  return yupObj;
 };
 
 const validateUrl = (urlValue, state) => {
