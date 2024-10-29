@@ -50,14 +50,14 @@ const addNewFeed = (newFeed, feeds, observedState) => {
   const feedsArr = Array.from(feeds);
 
   if (feedsArr.length === 0) {
-    observedState.feeds.add(newFeed);
+    observedState.feeds.push(newFeed);
     return;
   }
 
   const isDuplicate = feedsArr.some((feed) => feed.feedUrl === newFeed.feedUrl);
 
   if (!isDuplicate) {
-    observedState.feeds.add(newFeed);
+    observedState.feeds.push(newFeed);
   }
 };
 
@@ -65,8 +65,8 @@ const addNewPosts = (newPosts, newFeed, posts, observedState) => {
   const postsArr = Array.from(posts);
 
   const existingPosts = postsArr.filter((existingPost) => {
-    const PostsInFeed = existingPost.feed === newFeed.feedUrl;
-    return PostsInFeed;
+    const postsInFeed = existingPost.feed === newFeed.feedUrl;
+    return postsInFeed;
   });
 
   const filteredNewPosts = newPosts.filter((newPost) => {
@@ -77,20 +77,16 @@ const addNewPosts = (newPosts, newFeed, posts, observedState) => {
   });
 
   filteredNewPosts.forEach((newPost) => {
-    observedState.posts.add(newPost);
+    observedState.posts.push(newPost);
+  });
+};
 
-    const aElem = document.getElementById(newPost.postId);
-    const button = document.querySelector(
-      `button[data-id="${newPost.postId}"]`,
-    );
-
-    aElem.addEventListener('click', () => {
-      observedState.uiState.visitedPosts.add(newPost.postId);
-    });
-
-    button.addEventListener('click', () => {
-      observedState.uiState.visitedPosts.add(newPost.postId);
-    });
+const handlePostInteraction = (observedState) => {
+  const postsContainer = document.querySelector('.list-group');
+  postsContainer.addEventListener('click', ({ target }) => {
+    const liElement = target.closest('li');
+    const postId = liElement.getAttribute('data-id');
+    observedState.uiState.visitedPosts.add(postId);
   });
 };
 
@@ -100,4 +96,5 @@ export {
   addNewFeed,
   addNewPosts,
   generateRssFeed,
+  handlePostInteraction
 };

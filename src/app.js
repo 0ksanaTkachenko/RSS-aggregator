@@ -9,6 +9,7 @@ import {
   addNewFeed,
   addNewPosts,
   generateRssFeed,
+  handlePostInteraction,
 } from './feedManager.js';
 
 const initializeState = () => {
@@ -18,8 +19,8 @@ const initializeState = () => {
       formStatus: 'initial',
       formValidationStatus: 'PENDING',
     },
-    feeds: new Set(),
-    posts: new Set(),
+    feeds: [],
+    posts: [],
   };
 
   return state;
@@ -85,7 +86,6 @@ const app = () => {
               resolve();
             })
             .catch((error) => {
-              console.log(error);
               handleError(error, observedState);
             });
         });
@@ -119,6 +119,7 @@ const app = () => {
     };
 
     handleFormSubmit().then(() => {
+      handlePostInteraction(observedState);
       pollRssFeedsForNewPosts();
     });
   });

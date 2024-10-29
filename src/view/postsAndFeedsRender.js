@@ -24,6 +24,8 @@ const createListItem = (post, parentElement) => {
     'border-0',
     'border-end-0',
   );
+
+  liElem.dataset.id = post.postId;
   const aElem = document.createElement('a');
 
   aElem.href = post.link;
@@ -37,7 +39,6 @@ const createListItem = (post, parentElement) => {
   const button = document.createElement('button');
   button.type = 'button';
   button.className = 'btn btn-outline-primary btn-sm';
-  button.dataset.id = post.postId;
   button.dataset.bsToggle = 'modal';
   button.dataset.bsTarget = '#modal';
   button.textContent = 'Просмотр';
