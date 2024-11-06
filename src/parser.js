@@ -5,7 +5,7 @@ const dataParse = (data, feedUrl) => {
   const errorNode = xmlDoc.querySelector('parsererror');
 
   if (errorNode) {
-    const error = new Error('NOT_CONTAIN_RSS');
+    const error = new Error('not_contain_rss');
     error.data = errorNode.textContent;
     throw error;
   }

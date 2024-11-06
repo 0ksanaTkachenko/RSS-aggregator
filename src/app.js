@@ -16,8 +16,10 @@ const initializeState = () => {
   const state = {
     uiState: {
       visitedPosts: new Set(),
-      formStatus: 'initial',
-      formValidationStatus: 'PENDING',
+    },
+    formState: {
+      status: 'initial',
+      validationStatus: 'pending',
     },
     feeds: [],
     posts: [],
@@ -46,56 +48,25 @@ const app = () => {
       uIrender(path, value, state, i18nextInstance, domElements);
     });
 
-    const updateFormStatus = (newstatus, formValidationStatus) => {
-      observedState.uiState.formValidationStatus = formValidationStatus;
-      observedState.uiState.formStatus = newstatus;
+    const updateFormStatus = (newstatus, validationStatus) => {
+      observedState.formState.validationStatus = validationStatus;
+      observedState.formState.status = newstatus;
     };
 
     const handleError = (error) => {
-      let formValidationStatus;
+      let validationStatus;
 
       if (ruTranslation.validation[error.message]) {
-        formValidationStatus = error.message;
+        validationStatus = error.message;
       } else {
-        formValidationStatus = 'UNKNOWN_ERROR';
+        validationStatus = 'unknown_error';
       }
 
-      updateFormStatus('error', formValidationStatus, observedState);
+      updateFormStatus('error', validationStatus, observedState);
     };
 
-    const handleFormSubmit = () => {
-      const formAddEventListenerPromise = new Promise((resolve) => {
-        form.addEventListener('submit', (e) => {
-          e.preventDefault();
-          updateFormStatus('submitting', 'PENDING', observedState);
-          const urlValue = urlInput.value.trim();
-
-          validateUrl(urlValue, state)
-            .then(() => fetchRssFeed(urlValue))
-            .then((data) => {
-              const parsedData = dataParse(data, urlValue);
-              const feedsAndPostsData = generateRssFeed(parsedData);
-              addNewFeed(feedsAndPostsData.feed, state.feeds, observedState);
-              addNewPosts(
-                feedsAndPostsData.posts,
-                feedsAndPostsData.feed,
-                state.posts,
-                observedState,
-              );
-              updateFormStatus('initial', 'URL_VALID', observedState);
-              resolve();
-            })
-            .catch((error) => {
-              handleError(error, observedState);
-            });
-        });
-      });
-      return formAddEventListenerPromise;
-    };
-
-    const pollRssFeedsForNewPosts = () => {
-      const feedsArr = Array.from(state.feeds);
-      const promises = feedsArr.map(({ feedUrl }) => {
+    const fetchNewPostsFromFeeds = () => {
+      state.feeds.map(({ feedUrl }) => {
         const fetchFeed = fetchRssFeed(feedUrl)
           .then((data) => {
             const parsedData = dataParse(data, feedUrl);
@@ -106,22 +77,43 @@ const app = () => {
               state.posts,
               observedState,
             );
+            setTimeout(fetchNewPostsFromFeeds, timeToUpdate);
           })
           .catch((error) => {
             handleError(error, observedState);
           });
         return fetchFeed;
       });
-
-      Promise.all(promises).then(() => {
-        setTimeout(pollRssFeedsForNewPosts, timeToUpdate);
-      });
     };
 
-    handleFormSubmit().then(() => {
-      handlePostInteraction(observedState);
-      pollRssFeedsForNewPosts();
-    });
+    const handleFormSubmit = () => {
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        updateFormStatus('submitting', 'pending', observedState);
+        const urlValue = urlInput.value.trim();
+
+        validateUrl(urlValue, state)
+          .then(() => fetchRssFeed(urlValue))
+          .then((data) => {
+            const parsedData = dataParse(data, urlValue);
+            const feedsAndPostsData = generateRssFeed(parsedData);
+            addNewFeed(feedsAndPostsData.feed, state.feeds, observedState);
+            addNewPosts(
+              feedsAndPostsData.posts,
+              feedsAndPostsData.feed,
+              state.posts,
+              observedState,
+            );
+            updateFormStatus('initial', 'url_valid', observedState);
+            handlePostInteraction(observedState);
+            fetchNewPostsFromFeeds();
+          })
+          .catch((error) => {
+            handleError(error, observedState);
+          });
+      });
+    };
+    handleFormSubmit();
   });
 };
 

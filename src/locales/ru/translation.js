@@ -1,17 +1,17 @@
 const ruTranslation = {
   validation: {
-    PENDING: '',
-    URL_VALID: 'RSS успешно загружен',
-    INVALID_URL: 'Ссылка должна быть валидным URL',
-    DUPLICATE_URL: 'RSS уже существует',
-    NOT_CONTAIN_RSS: 'Ресурс не содержит валидный RSS',
-    UNKNOWN_ERROR: 'Что-то пошло не так',
-    EMPTY_URL: 'Не должно быть пустым',
-    NETWORK_ERROR: 'Ошибка сети',
+    pending: '',
+    url_valid: 'RSS успешно загружен',
+    invalid_url: 'Ссылка должна быть валидным URL',
+    duplicate_url: 'RSS уже существует',
+    not_contain_rss: 'Ресурс не содержит валидный RSS',
+    unknown_error: 'Что-то пошло не так',
+    empty_url: 'Не должно быть пустым',
+    network_error: 'Ошибка сети',
   },
   titles: {
-    POSTS: 'Посты',
-    FEEDS: 'Фиды',
+    posts: 'Посты',
+    feeds: 'Фиды',
   },
 };
 

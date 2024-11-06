@@ -4,9 +4,9 @@ const createLinkSchema = (existingLinks) => {
   const yupObj = yup.object({
     url: yup
       .string()
-      .min(1, 'EMPTY_URL')
-      .url('INVALID_URL')
-      .notOneOf(existingLinks, 'DUPLICATE_URL'),
+      .min(1, 'empty_url')
+      .url('invalid_url')
+      .notOneOf(existingLinks, 'duplicate_url'),
   });
   return yupObj;
 };
@@ -18,7 +18,7 @@ const validateUrl = (urlValue, state) => {
 
   return linkSchema
     .validate({ url: urlValue })
-    .then(() => ({ valid: true, message: 'URL_VALID' }))
+    .then(() => ({ valid: true, message: 'url_valid' }))
     .catch((err) => {
       throw new Error(err.message);
     });

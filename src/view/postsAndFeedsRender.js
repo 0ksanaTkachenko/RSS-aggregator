@@ -73,22 +73,34 @@ const createListGroup = (parentElement) => {
   return listGroup;
 };
 
-const displayList = (type, newItem, i18nextInstance) => {
+const displayList = (type, value, i18nextInstance) => {
   const elem = document.getElementById(type);
   let listGroup = elem.querySelector('.list-group');
-
-  const titleKey = type === 'feeds' ? 'titles.FEEDS' : 'titles.POSTS';
+  const titleKey = `titles.${type}`;
 
   if (!listGroup) {
     createTitle(i18nextInstance.t(titleKey), elem);
     listGroup = createListGroup(elem);
   }
 
-  if (type === 'feeds') {
-    createFeedsListItem(newItem, listGroup);
-  } else {
-    createListItem(newItem, listGroup);
-  }
+  const handlers = {
+    feeds: () => {
+      const newFeed = value[value.length - 1];
+      createFeedsListItem(newFeed, listGroup);
+    },
+    posts: () => {
+      const renderedPostElementsId = Array.from(
+        listGroup.querySelectorAll('.list-group-item'),
+        (el) => el.dataset.id,
+      );
+
+      value
+        .filter((post) => !renderedPostElementsId.includes(post.postId))
+        .forEach((post) => createListItem(post, listGroup));
+    },
+  };
+
+  handlers[type]?.();
 };
 
 export default displayList;

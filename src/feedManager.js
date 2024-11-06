@@ -16,7 +16,7 @@ const fetchRssFeed = (urlValue) => {
     .then((response) => response.data)
     .catch((error) => {
       if (error.isAxiosError && !error.response) {
-        throw new Error('NETWORK_ERROR');
+        throw new Error('network_error');
       }
       throw error;
     });
@@ -47,14 +47,12 @@ const generateRssFeed = (parsedData) => {
 };
 
 const addNewFeed = (newFeed, feeds, observedState) => {
-  const feedsArr = Array.from(feeds);
-
-  if (feedsArr.length === 0) {
+  if (feeds.length === 0) {
     observedState.feeds.push(newFeed);
     return;
   }
 
-  const isDuplicate = feedsArr.some((feed) => feed.feedUrl === newFeed.feedUrl);
+  const isDuplicate = feeds.some((feed) => feed.feedUrl === newFeed.feedUrl);
 
   if (!isDuplicate) {
     observedState.feeds.push(newFeed);
@@ -62,9 +60,7 @@ const addNewFeed = (newFeed, feeds, observedState) => {
 };
 
 const addNewPosts = (newPosts, newFeed, posts, observedState) => {
-  const postsArr = Array.from(posts);
-
-  const existingPosts = postsArr.filter((existingPost) => {
+  const existingPosts = posts.filter((existingPost) => {
     const postsInFeed = existingPost.feed === newFeed.feedUrl;
     return postsInFeed;
   });
@@ -75,10 +71,7 @@ const addNewPosts = (newPosts, newFeed, posts, observedState) => {
     );
     return isDuplicate;
   });
-
-  filteredNewPosts.forEach((newPost) => {
-    observedState.posts.push(newPost);
-  });
+  observedState.posts.push(...filteredNewPosts);
 };
 
 const handlePostInteraction = (observedState) => {
