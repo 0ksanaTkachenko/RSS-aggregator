@@ -20,7 +20,7 @@ const uIrender = (path, value, state, i18nextInstance, domElements) => {
       break;
     }
     case 'uiState.visitedPosts': {
-      const visitedPostID = value[value.length - 1];
+      const visitedPostID = [...value].pop();
       updateVisitedPostsUI(visitedPostID);
       openModalRender(state, visitedPostID, domElements);
       break;
