@@ -1,5 +1,5 @@
 import i18next from 'i18next';
-import ruTranslation from './locales/ru/translation.js';
+import enTranslation from './locales/en/translation.js';
 
 const i18nInit = () => {
   const i18nextInstance = i18next.createInstance();
@@ -7,9 +7,9 @@ const i18nInit = () => {
   return i18nextInstance
     .init({
       resources: {
-        ru: { translation: ruTranslation },
+        en: { translation: enTranslation },
       },
-      lng: 'ru',
+      lng: 'en',
       interpolation: {
         escapeValue: false,
       },

@@ -2,7 +2,7 @@ import onChange from 'on-change';
 import validateUrl from './validate.js';
 import dataParse from './parser.js';
 import uIrender from './view/view.js';
-import ruTranslation from './locales/ru/translation.js';
+import enTranslation from './locales/en/translation.js';
 import i18nInit from './i18n.js';
 import {
   fetchRssFeed,
@@ -56,7 +56,7 @@ const app = () => {
     const handleError = (error) => {
       let validationStatus;
 
-      if (ruTranslation.validation[error.message]) {
+      if (enTranslation.validation[error.message]) {
         validationStatus = error.message;
       } else {
         validationStatus = 'unknown_error';
