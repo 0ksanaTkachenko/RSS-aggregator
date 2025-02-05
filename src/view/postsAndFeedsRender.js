@@ -41,7 +41,7 @@ const createListItem = (post, parentElement) => {
   button.className = 'btn btn-outline-primary btn-sm';
   button.dataset.bsToggle = 'modal';
   button.dataset.bsTarget = '#modal';
-  button.textContent = 'Просмотр';
+  button.textContent = 'View';
 
   liElem.appendChild(aElem);
   liElem.appendChild(button);
